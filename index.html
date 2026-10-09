@@ -1,0 +1,1402 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 Güz Takvimi</title>
+<style>
+:root{
+  --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b19; --muted:#6b6862; --line:#e4e1da; --soft:#efede8; --soft2:#f8f7f4;
+  --accent:#c2410c; --ok:#15803d; --bad:#b42318; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#141413; --panel:#1d1d1b; --ink:#ecebe7; --muted:#9a978f; --line:#2f2e2b; --soft:#262523; --soft2:#212120; --accent:#fb923c; --ok:#4ade80; --bad:#f87171; --shadow:none}
+}
+/* ders renkleri (Excel programıyla aynı palet) */
+.k-EE303{--c:#2563eb;--bg0:#C7D9F5;--bgl0:#E3ECFA;--tx0:#1F3F7A}
+.k-EE361{--c:#c76a00;--bg0:#F8D9AE;--bgl0:#FCECD5;--tx0:#7A4A0C}
+.k-EE402{--c:#0e8a5f;--bg0:#C4E6D3;--bgl0:#E1F2E8;--tx0:#1E5A3F}
+.k-EE407{--c:#7c3aed;--bg0:#D9D0F2;--bgl0:#ECE7F9;--tx0:#4A3487}
+.k-EE493{--c:#d6336c;--bg0:#F4CBD8;--bgl0:#FAE4EB;--tx0:#85284A}
+.k-ODTU {--c:#6b7280;--bg0:#E5E7EB;--bgl0:#F1F2F4;--tx0:#374151}
+.k-OZEL {--c:#0f766e;--bg0:#CBE9E6;--bgl0:#E4F4F2;--tx0:#134E4A}
+.k{--bg:var(--bg0);--bgl:var(--bgl0);--tx:var(--tx0)}
+@media (prefers-color-scheme: dark){
+  .k-EE303{--c:#6b9bff}.k-EE361{--c:#f0a43a}.k-EE402{--c:#3ccf98}.k-EE407{--c:#a98bff}.k-EE493{--c:#ff6b9d}.k-ODTU{--c:#9ca3af}.k-OZEL{--c:#2dd4bf}
+  .k{--bg:color-mix(in srgb,var(--c) 30%,#1d1d1b);--bgl:color-mix(in srgb,var(--c) 16%,#1d1d1b);--tx:color-mix(in srgb,var(--c) 30%,#fff)}
+}
+/* yük seviyeleri */
+.L0{--lv:var(--soft)} .L1{--lv:color-mix(in srgb,var(--accent) 22%,var(--panel))} .L2{--lv:color-mix(in srgb,var(--accent) 50%,var(--panel))} .L3{--lv:var(--accent)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.wrap{max-width:1440px;margin:0 auto;padding:20px 16px 40px}
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em;font-weight:650}
+.sub{color:var(--muted);font-size:13px;margin-top:2px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--panel);padding:7px 12px;border-radius:8px;font-size:13px;white-space:nowrap}
+.btn:hover{background:var(--soft)}
+.btn.icon{width:34px;padding:7px 0;text-align:center}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.pri:hover{opacity:.88;background:var(--ink)}
+.btn.danger{color:var(--bad)}
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:7px}
+.btn.syncok{color:var(--ok)}
+.btn.syncerr{color:var(--bad);border-color:var(--bad)}
+.mb code{font-size:12px;background:var(--soft);padding:1px 5px;border-radius:4px}
+.mb a{color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:7px 12px;font-size:13px}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.chipf{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 11px 5px 9px;font-size:13px;user-select:none}
+.chipf .dot{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chipf.off{opacity:.42}
+.chipf.off .dot{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c)}
+.chipf .nm{color:var(--muted);font-size:12px}
+.chipf.tog .dot{border-radius:2px;background:var(--ink)}
+.chipf.tog.off .dot{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
+@media (max-width:1050px){.layout{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.mainhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mainhead h2{margin:0;font-size:17px;font-weight:650}
+.mainhead .nav{display:flex;gap:6px}
+.wkbadge{font-size:12px;color:var(--muted);font-weight:500;margin-left:8px}
+.lvpill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;background:var(--lv);color:var(--ink);margin-left:8px;vertical-align:2px}
+.L3.lvpill{color:#fff}
+
+/* ---- ÜST ŞERİT ---- */
+.strip{display:grid;grid-template-columns:1.1fr 1.1fr 1.6fr;margin-bottom:14px}
+@media (max-width:900px){.strip{grid-template-columns:1fr}}
+.strip>div{padding:12px 16px;border-right:1px solid var(--line);min-width:0}
+.strip>div:last-child{border-right:0}
+@media (max-width:900px){.strip>div{border-right:0;border-bottom:1px solid var(--line)}.strip>div:last-child{border-bottom:0}}
+.slbl{font-size:11px;font-weight:650;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.sbig{font-size:15px;font-weight:650;line-height:1.3;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbig .dot{width:9px;height:9px}
+.ssm{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ssm b{color:var(--ink);font-weight:600}
+.prog{display:flex;gap:3px;margin-top:6px;align-items:flex-end}
+.seg2{flex:1;height:22px;border-radius:4px;background:var(--lv);cursor:pointer;position:relative;border:1px solid var(--line)}
+.seg2.past{opacity:.45}
+.seg2.cur{outline:2px solid var(--ink);outline-offset:1px}
+.seg2 span{position:absolute;bottom:-15px;left:0;right:0;text-align:center;font-size:9.5px;color:var(--muted)}
+.seg2:hover{filter:brightness(.93)}
+.legend{display:flex;gap:10px;font-size:11px;color:var(--muted);margin-top:18px;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--lv);vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+
+/* ---- AY ---- */
+.grid{display:grid;grid-template-columns:44px repeat(7,minmax(0,1fr))}
+.dow{padding:8px;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line)}
+.wkcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding-top:9px;gap:6px;cursor:pointer}
+.wkcell .wn{font-size:10.5px;color:var(--muted);font-weight:600}
+.wkcell .lv{width:8px;flex:1;max-height:70px;border-radius:4px;background:var(--lv);margin-bottom:8px}
+.day{min-height:112px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:5px 5px 6px;position:relative;cursor:pointer;min-width:0}
+.grid>.day:nth-child(8n){border-right:0}
+.day.other{background:var(--soft)}
+.day.other .num{opacity:.45}
+.day.wknd:not(.other){background:var(--soft2)}
+.day.hol{background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,#6b7280 10%,transparent) 7px 14px)}
+.day.past:not(.today) .ev{opacity:.5}
+.day.past:not(.today) .num{color:var(--muted)}
+.day:hover{outline:2px solid color-mix(in srgb,var(--ink) 18%,transparent);outline-offset:-2px}
+.num{font-size:12px;font-weight:600;width:24px;height:24px;display:inline-grid;place-items:center;border-radius:50%;margin-bottom:2px}
+.today .num,.wh.today .dn{background:var(--accent);color:#fff}
+.ndots{position:absolute;top:10px;right:8px;display:flex;gap:2px}
+.ndots i{width:5px;height:5px;border-radius:50%;background:var(--c);opacity:.55}
+.ev{display:block;font-size:11.5px;line-height:1.25;padding:3px 6px;border-radius:5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid var(--c);background:var(--bgl);color:var(--tx);cursor:pointer}
+.ev.exam{background:var(--c);color:#fff;font-weight:650}
+.ev.quiz{font-weight:650;background:var(--bg)}
+.ev.deadline{background:var(--panel);border:1px dashed var(--c);border-left:3px solid var(--c);font-weight:600}
+.ev.lab{background:repeating-linear-gradient(135deg,var(--bgl) 0 6px,var(--bg) 6px 12px);font-weight:600}
+.ev.academic{background:var(--soft);color:var(--muted);border-left-color:var(--c)}
+.ev.cont{opacity:.75}
+.ev.holiday{background:color-mix(in srgb,#6b7280 18%,transparent);color:var(--ink);font-weight:600}
+.ev.user::before{content:"● ";font-size:8px;vertical-align:1px}
+.ev.done,.blk.done,.dcard.done{opacity:.45!important;text-decoration:line-through}
+.ev.done::after{content:" ✓"}
+.more{font-size:11px;color:var(--muted);margin-top:3px;padding-left:4px}
+
+/* ---- HAFTA ---- */
+.wscroll{overflow-x:auto}
+.week{min-width:760px;display:grid;grid-template-columns:52px repeat(5,minmax(0,1fr)) repeat(2,minmax(0,.62fr))}
+.wh{border-bottom:1px solid var(--line);padding:8px 6px 6px;text-align:center;border-left:1px solid var(--line);cursor:pointer}
+.wh:hover{background:var(--soft)}
+.wh .dw{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.wh .dn{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;font-size:15px;font-weight:650;margin-top:2px}
+.wh.past:not(.today) .dn{color:var(--muted)}
+.exm{display:flex;gap:3px;justify-content:center;height:4px;margin-top:3px}
+.exm i{width:16px;height:4px;border-radius:2px;background:var(--c)}
+.wh.wknd,.wcol.wknd,.wall.wknd{background:var(--soft2)}
+.wh.hol,.wcol.hol,.wall.hol{background:repeating-linear-gradient(135deg,transparent 0 7px,color-mix(in srgb,#6b7280 9%,transparent) 7px 14px)}
+.corner{border-bottom:1px solid var(--line)}
+.wall{border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:4px 4px 6px;min-height:34px;min-width:0}
+.wall .ev{margin-top:0;margin-bottom:3px}
+.alllbl{font-size:10px;color:var(--muted);border-bottom:1px solid var(--line);padding:8px 4px;text-align:right}
+.times{position:relative}
+.times span{position:absolute;right:6px;font-size:10.5px;color:var(--muted);transform:translateY(-50%)}
+.wcol{position:relative;border-left:1px solid var(--line);min-width:0}
+.wcol.past .blk:not(.done):not(.cancel){opacity:.72}
+.hline{position:absolute;left:0;right:0;border-top:1px solid var(--line)}
+.hline.half{border-top-style:dotted;opacity:.6}
+.blk{position:absolute;border-radius:7px;padding:4px 6px;overflow:hidden;font-size:12px;line-height:1.25;background:var(--bg);color:var(--tx);border-left:3px solid var(--c);cursor:pointer;box-shadow:0 0 0 1px var(--panel)}
+.blk:hover{filter:brightness(.97)}
+.blk.light{background:var(--bgl)}
+.blk b{display:block;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:14px}
+.blk .tm{font-size:11px;opacity:.8;white-space:nowrap}
+.blk .rm{font-size:11px;opacity:.8}
+.blk.cancel{opacity:.45;text-decoration:line-through;background:var(--soft);border-left-style:dashed}
+.blk.evt{background:var(--c);color:#fff;border-left-color:color-mix(in srgb,var(--c) 60%,#000)}
+.blk.evt.lab{background:repeating-linear-gradient(135deg,var(--bg) 0 7px,var(--bgl) 7px 14px);color:var(--tx);border:1.5px solid var(--c);border-left-width:3px}
+.mk{position:absolute;top:3px;right:5px;font-size:11px;font-weight:800;line-height:1}
+.mk.ok{color:var(--ok)} .mk.no{color:var(--bad)} .mk.inf{color:var(--c)}
+.nowline{position:absolute;left:0;right:0;border-top:2px solid var(--accent);z-index:3;pointer-events:none}
+.nowline::before{content:"";position:absolute;left:-5px;top:-5px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.droptarget{outline:2px dashed var(--accent)!important;outline-offset:-3px}
+.hinted{background:color-mix(in srgb,var(--accent) 9%,transparent)!important}
+
+/* ---- GÜN ---- */
+.dayview{padding:6px 14px 16px}
+.dallday{display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;border-bottom:1px solid var(--line);min-height:20px}
+.dallday .ev{margin:0;font-size:13px;padding:5px 9px;white-space:normal}
+.drow{display:grid;grid-template-columns:86px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.drow:last-child{border-bottom:0}
+.drow .dt{font-size:13px;font-weight:650;padding-top:8px;font-variant-numeric:tabular-nums}
+.drow .dt small{display:block;font-weight:400;color:var(--muted)}
+.dcard{border-radius:10px;padding:10px 34px 10px 12px;background:var(--bg);color:var(--tx);border-left:4px solid var(--c);cursor:pointer;position:relative}
+.dcard.light{background:var(--bgl)}
+.dcard.cancel{opacity:.5;text-decoration:line-through}
+.dcard.evt{background:var(--c);color:#fff}
+.dcard.evt.lab{background:repeating-linear-gradient(135deg,var(--bg) 0 8px,var(--bgl) 8px 16px);color:var(--tx);border:1.5px solid var(--c);border-left-width:4px}
+.dcard.now{box-shadow:0 0 0 2px var(--accent)}
+.dcard b{font-size:15px}
+.dcard .meta{font-size:12.5px;opacity:.85;margin-top:2px}
+.dcard .nt{font-size:12.5px;margin-top:6px;padding:6px 8px;border-radius:6px;background:color-mix(in srgb,var(--panel) 55%,transparent)}
+.dcard .mk{top:10px;right:12px;font-size:14px}
+.empty{color:var(--muted);font-size:13px;padding:6px 14px 14px}
+
+/* ---- YAN PANEL ---- */
+.side{display:flex;flex-direction:column;gap:16px}
+.side h3{margin:0;font-size:12.5px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:12px 14px 4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cnt{font-size:11px;background:var(--soft);border-radius:999px;padding:1px 8px;color:var(--muted);letter-spacing:0}
+.list{padding:4px 8px 10px}
+.item{display:grid;grid-template-columns:48px 1fr auto;gap:10px;padding:7px 6px;border-radius:8px;cursor:pointer;align-items:start}
+.item:hover{background:var(--soft)}
+.item.isdone{opacity:.5}
+.item.isdone .t{text-decoration:line-through}
+.when{text-align:center;border-radius:8px;padding:4px 0;background:var(--soft)}
+.when .d{font-size:16px;font-weight:700;line-height:1.1}
+.when .m{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.item .t{font-weight:600;font-size:13.5px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:1px}
+.item .s{font-size:12px;color:var(--muted)}
+.chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);background:var(--panel);display:grid;place-items:center;font-size:11px;color:transparent;padding:0;margin-top:2px}
+.chk:hover{border-color:var(--ok);color:var(--ok)}
+.chk.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.badge{display:inline-block;white-space:nowrap;font-size:10.5px;font-weight:650;padding:1px 6px;border-radius:999px;background:var(--soft);color:var(--muted);margin-left:4px;vertical-align:1px}
+.badge.hot{background:var(--accent);color:#fff}
+.badge.warm{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.und{padding:2px 8px 10px;max-height:min(420px,calc(100vh - 260px));overflow-y:auto;overscroll-behavior:contain}
+.und .grp{font-size:11px;font-weight:650;color:var(--c);padding:8px 6px 2px;text-transform:uppercase;letter-spacing:.04em}
+.uitem{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center;padding:6px 6px;border-radius:8px;cursor:grab;border:1px solid transparent}
+.uitem:hover{background:var(--soft)}
+.uitem:active{cursor:grabbing}
+.uitem .grip{width:8px;height:16px;background-image:radial-gradient(var(--muted) 1px,transparent 1.2px);background-size:4px 4px;opacity:.7}
+.uitem .t{font-size:13px;font-weight:600;line-height:1.25}
+.uitem .s{font-size:11.5px;color:var(--muted);line-height:1.3}
+.uitem.dragging{opacity:.4}
+.und.droptarget{border-radius:10px}
+.tip{font-size:12px;color:var(--muted);padding:0 14px 6px}
+.att{padding:2px 14px 12px}
+.arow{padding:7px 0;border-bottom:1px solid var(--line)}
+.arow:last-of-type{border-bottom:0}
+.arow .h{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:600;align-items:baseline}
+.arow .h span:last-child{font-weight:500;font-size:11.5px;color:var(--muted);text-align:right}
+.pips{display:flex;gap:3px;margin-top:5px}
+.pips i{flex:1;height:8px;border-radius:3px;background:var(--soft);border:1px solid var(--line)}
+.pips i.ok{background:var(--c);border-color:var(--c)}
+.pips i.no{background:var(--bad);border-color:var(--bad)}
+.arow .w{font-size:12px;margin-top:4px;color:var(--muted)}
+.w.good{color:var(--ok)} .w.warn{color:var(--accent);font-weight:600} .w.bad{color:var(--bad);font-weight:650}
+footer{color:var(--muted);font-size:12px;margin-top:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+
+/* ---- LİSTE ---- */
+.agenda{padding:6px 10px 14px}
+.agenda .mh{font-size:12.5px;font-weight:650;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:14px 6px 6px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.agenda .item{grid-template-columns:48px 1fr auto auto}
+.agenda .item.past{opacity:.45}
+.agenda .r{font-size:12px;color:var(--muted);white-space:nowrap;padding-top:2px}
+
+/* ---- DERSLER ---- */
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px;padding:14px}
+@media (max-width:520px){.courses{grid-template-columns:1fr;padding:10px}}
+.ccard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.ccard .chd{padding:12px 14px;background:var(--bgl);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-top:4px solid var(--c)}
+.ccard .chd b{font-size:16px;color:var(--tx)}
+.ccard .chd .nm{font-size:12.5px;color:var(--tx);opacity:.85}
+.ccard .avg{text-align:right;color:var(--tx)}
+.ccard .avg .n{font-size:22px;font-weight:700;line-height:1}
+.ccard .avg .l{font-size:10.5px;opacity:.8}
+.csec{padding:10px 14px;border-bottom:1px solid var(--line)}
+.csec:last-child{border-bottom:0}
+.csec h5{margin:0 0 6px;font-size:11px;font-weight:650;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.ppl{width:100%;border-collapse:collapse;font-size:12.5px}
+.ppl td{padding:3px 0;vertical-align:top}
+.ppl td:first-child{color:var(--muted);width:36%;padding-right:8px}
+.ppl a{color:var(--c);text-decoration:none}
+.ppl a:hover{text-decoration:underline}
+.rules{margin:0;padding-left:18px;font-size:12.5px}
+.rules li{margin:2px 0}
+.links{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.links a{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;text-decoration:none;color:var(--ink)}
+.links a:hover{background:var(--soft)}
+.gtab{width:100%;border-collapse:collapse;font-size:13px}
+.gtab td{padding:3px 0;border-bottom:1px dotted var(--line)}
+.gtab tr:last-child td{border-bottom:0}
+.gtab td.w{color:var(--muted);font-size:12px;width:52px;text-align:right;padding-right:10px}
+.gtab td.in{width:78px;text-align:right}
+.gtab input{width:70px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:4px 7px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.gtab tr.fin td{font-weight:650}
+.gres{margin-top:8px;font-size:12.5px;background:var(--soft);border-radius:8px;padding:8px 10px;line-height:1.6}
+.gres b{font-weight:700}
+.gres input{width:56px;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:1px 6px;text-align:right;color:var(--ink)}
+.gres .fn{color:var(--muted);font-size:11.5px;line-height:1.4;display:block;margin-top:4px}
+
+/* ---- MODAL & TOAST ---- */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);padding:0;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 40px);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(20,20,19,.35)}
+.mh2{padding:16px 18px 4px;display:flex;gap:10px;align-items:flex-start}
+.mh2 .bar{width:5px;align-self:stretch;border-radius:3px;background:var(--c)}
+.mh2 h4{margin:0;font-size:16px;font-weight:650}
+.mh2 .s{font-size:12.5px;color:var(--muted)}
+.mb{padding:8px 18px 4px;font-size:13.5px}
+.mb p{margin:6px 0}
+.mb .note{background:var(--soft);border-radius:8px;padding:8px 10px;font-size:12.5px;margin:8px 0}
+.mb .warn{background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:8px;padding:8px 10px;font-size:12.5px;margin:8px 0}
+.mb h6{margin:12px 0 6px;font-size:11px;font-weight:650;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+.form label.full{grid-column:1/-1}
+.form input,.form select,.form textarea{width:100%;min-width:0}
+.form input,.form select,.form textarea,.mb textarea{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:7px 9px;font-size:13.5px;color:var(--ink);font-weight:400}
+.mb textarea{width:100%;resize:vertical;min-height:60px}
+.attbtns{display:flex;gap:6px;flex-wrap:wrap}
+.attbtns .btn.ok.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.attbtns .btn.no.on{background:var(--bad);border-color:var(--bad);color:#fff}
+.subs{display:flex;flex-direction:column;gap:4px}
+.subs label{display:flex;gap:8px;align-items:center;font-size:13px}
+.subs label.dn span{text-decoration:line-through;color:var(--muted)}
+.subs .x{margin-left:auto;border:0;background:none;color:var(--muted);font-size:15px;padding:0 4px}
+.subadd{display:flex;gap:6px;margin-top:6px}
+.subadd input{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 9px;font-size:13px;color:var(--ink)}
+.opt{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;margin:8px 0}
+.opt small{display:block;color:var(--muted);font-size:12px}
+.mf{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px 16px;flex-wrap:wrap}
+.mf .sp{flex:1}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:10px;font-size:13px;display:flex;gap:12px;align-items:center;opacity:0;pointer-events:none;transition:.2s;z-index:50;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%);pointer-events:auto}
+.toast button{background:none;border:0;color:var(--accent);font-weight:700;padding:0}
+@media (max-width:720px){
+  .day{min-height:64px;padding:3px}
+  .ev{font-size:0;padding:0;height:6px;border-radius:3px;border-left-width:0}
+  .dallday .ev{font-size:13px;height:auto;padding:5px 9px;border-left-width:3px}
+  .ndots{display:none}
+  .grid{grid-template-columns:22px repeat(7,minmax(0,1fr))}
+  .wkcell .wn{font-size:9px}
+  .drow{grid-template-columns:58px 1fr;gap:8px}
+  h1{font-size:19px}
+  .toolbar .btn#printBtn{display:none}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 12px;padding:0 16px 2px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chipf{flex:none}
+  .chipf .nm{display:none}
+  .strip>div{padding:10px 14px}
+  .legend{display:none}
+  .prog{margin-bottom:14px}
+}
+/* ---- YAZDIRMA ---- */
+@page{size:A4 landscape;margin:9mm}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}
+  .toolbar,.filters,.side,footer,.mainhead .nav,.toast,dialog,.strip{display:none!important}
+  .wrap{padding:0;max-width:none}
+  .layout{display:block}
+  .card{box-shadow:none}
+  .week{min-width:0}
+  .wscroll{overflow:visible}
+  .day{min-height:86px}
+  .courses{grid-template-columns:1fr 1fr}
+  .ccard{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>2026 Güz Dönemi Takvimi</h1>
+      <div class="sub">Ders programı, sınavlar ve teslimler · EE303 · EE361 · EE402 · EE407 · EE493</div>
+    </div>
+    <div class="toolbar">
+      <div class="seg" id="views">
+        <button data-v="day">Gün</button><button data-v="week">Hafta</button><button data-v="month">Ay</button><button data-v="list">Liste</button><button data-v="courses">Dersler</button>
+      </div>
+      <button class="btn" id="addBtn">+ Etkinlik</button>
+      <button class="btn" id="printBtn" title="Görünen sayfayı yazdır / PDF olarak kaydet">Yazdır</button>
+      <button class="btn" id="ics" title="Telefon / Google Takvim'e aktar">Takvime aktar</button>
+      <button class="btn" id="syncBtn">☁ Senkron</button>
+    </div>
+  </header>
+
+  <section class="card strip" id="strip"></section>
+  <div class="filters" id="filters"></div>
+
+  <div class="layout">
+    <main class="card" id="main"></main>
+    <aside class="side">
+      <section class="card">
+        <h3>Tarihi belli değil <span class="cnt" id="undCnt">0</span></h3>
+        <div class="tip">Bir öğeyi takvimde bir güne sürükle ya da tıklayıp tarih ver. Takvimdeki bir etkinliği buraya sürükleyerek geri alabilirsin.</div>
+        <div class="und" id="undated"></div>
+      </section>
+      <section class="card">
+        <h3>Devam durumu</h3>
+        <div class="att" id="attendance"></div>
+      </section>
+      <section class="card">
+        <h3>Yaklaşanlar</h3>
+        <div class="list" id="upcoming"></div>
+      </section>
+    </aside>
+  </div>
+  <footer>
+    <span id="saveNote">Değişikliklerin bu tarayıcıda otomatik kaydedilir.</span>
+    <a id="bkOut">Yedek indir</a><a id="bkIn">Yedek yükle</a><a id="reset">Değişiklikleri sıfırla</a>
+    <span>Kısayollar: ← → gezin · T bugün</span>
+    <input type="file" id="bkFile" accept=".json,application/json" hidden>
+  </footer>
+</div>
+
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast"><span id="toastMsg"></span><button id="toastUndo">Geri al</button></div>
+
+<script>
+/* =====================================================================
+   VERİ
+   ===================================================================== */
+const COURSES = {
+  EE303:{name:"Electromagnetic Waves"},
+  EE361:{name:"Electromechanical Energy Conv. I"},
+  EE402:{name:"Discrete-Time Systems"},
+  EE407:{name:"Process Control"},
+  EE493:{name:"Engineering Design I"},
+  ODTU:{name:"Akademik takvim",label:"ODTÜ"},
+  OZEL:{name:"Kendi eklediklerin",label:"Özel"}
+};
+const MAIN5=["EE303","EE361","EE402","EE407","EE493"];
+const SEM_START="2026-09-28", SEM_END="2026-12-31";
+const HOLI=[{d:"2026-10-28",from:"13:00"},{d:"2026-10-29"},{d:"2027-01-01"}];
+
+const EE303_TOPICS={1:"Maxwell denklemleri, yerdeğiştirme akımı",2:"EM sınır koşulları, dalga denklemleri",3:"Vektör/skaler potansiyeller, fazör domeni",4:"Kayıpsız ortamda düzlem dalgalar",5:"Keyfi yönde düzlem dalgalar, polarizasyon",6:"Kayıplı ortamda düzlem dalgalar",7:"Poynting teoremi, güç yoğunlukları",8:"Düzlemsel sınırlara dik geliş, duran dalgalar",9:"Eğik geliş, Snell yasaları, kritik açı",10:"Fresnel denklemleri, Brewster açısı",11:"İletim hattı denklemleri ve parametreleri",12:"Yansıma katsayısı, VSWR",13:"Sonlu hatların giriş empedansı",14:"Dikdörtgen dalga kılavuzları"};
+const EE493_TOPICS={1:"Introduction",2:"Concept Generation, Design Tools & Problem-Solving (Elif Tuğçe Ceran) · 14:40'ta DS koordinatör toplantısı",3:"Fundamentals of Design (Murat Eyüboğlu)",4:"Engineering Statistics (S. Figen Öktem Seven)",6:"Embedded Systems (Gözde Bozdağı Akar)",7:"Image Analysis for Engineering Design",8:"Project Management",9:"Basics of Mechanical Design (Yusuf Samet Yaraş)",10:"Practical Aspects of Electrical Motor Drive (İlker Şahin)"};
+/* Haftalık ders programı (programım.xlsx) */
+const SLOTS=[
+  {id:"ee402a",c:"EE402",k:"Ders",dow:0,s:"11:40",e:"12:30",room:"EA206"},
+  {id:"ee303d",c:"EE303",k:"Discussion",dow:0,s:"14:40",e:"15:30",room:"EA310",light:1,weeks:[2,3,4,5,6,7,8,9,10,11,12,13],notes:{"2026-10-26":"28-29 Ekim tatili nedeniyle bu hafta discussion yerine iki saatlik ders yapılacak (syllabus)."}},
+  {id:"ee407a",c:"EE407",k:"Ders",dow:0,s:"15:40",e:"17:30",room:"EA307"},
+  {id:"ee361a",c:"EE361",k:"Ders",dow:1,s:"09:40",e:"11:30",room:"EA310"},
+  {id:"ee407b",c:"EE407",k:"Ders",dow:2,s:"09:40",e:"10:30",room:"EA307"},
+  {id:"ee402b",c:"EE402",k:"Ders",dow:2,s:"10:40",e:"12:30",room:"EA206"},
+  {id:"ee493m",c:"EE493",k:"Weekly Meeting",dow:2,s:"12:40",e:"13:30",light:1},
+  {id:"ee493s",c:"EE493",k:"Seminer",dow:2,s:"13:40",e:"15:30",weeks:[1,2,3,4,6,7,8,9,10],topics:EE493_TOPICS,over:{"2026-10-07":{e:"14:30"}}},
+  {id:"ee303a",c:"EE303",k:"Ders",dow:2,s:"15:40",e:"17:30",room:"EA312",topics:EE303_TOPICS,notes:{"2026-09-30":"1. hafta: discussion yok, dersler bölümlerde 3 saat.","2026-12-30":"14. hafta: discussion yok, dersler bölümlerde 3 saat. Lab demosu bu hafta."}},
+  {id:"ee361b",c:"EE361",k:"Ders",dow:3,s:"11:40",e:"12:30",room:"EA310"}
+];
+const LAB_SLOT={EE361:{s:"13:40",e:"17:30",dow:1,lbl:"Salı 13:40–17:30"},EE407:{s:"08:40",e:"11:30",dow:3,lbl:"Perşembe 08:40–11:30"}};
+
+/* type: exam | quiz | deadline | lab | event | academic | holiday
+   d: tarih (null = tarihi belli değil) · end: aralık bitişi · s/e: saat · due: teslim saati
+   hint: ipucu · win: olası tarih aralığı · w: yük ağırlığı (verilmezse türe göre) */
+const BASE=[
+  {id:"a-kayit",c:"ODTU",type:"academic",t:"Ders Kayıtları",d:"2026-09-23",end:"2026-09-25"},
+  {id:"a-bas",c:"ODTU",type:"academic",t:"Derslerin Başlaması",d:"2026-09-28"},
+  {id:"a-ekbr",c:"ODTU",type:"academic",t:"Ders Ekleme-Bırakma",d:"2026-10-05",end:"2026-10-09"},
+  {id:"a-arife",c:"ODTU",type:"holiday",t:"Bayram arifesi (öğleden sonra tatil)",d:"2026-10-28",n:"13:00'ten sonraki dersler yapılmaz"},
+  {id:"a-29ek",c:"ODTU",type:"holiday",t:"Cumhuriyet Bayramı",d:"2026-10-29"},
+  {id:"a-cekil",c:"ODTU",type:"deadline",t:"Dersten çekilme son gün",d:"2026-12-06",n:"Öğrenci başvuruları için son gün",w:0.5},
+  {id:"a-bitis",c:"ODTU",type:"academic",t:"Derslerin Bitişi",d:"2026-12-31"},
+  {id:"a-yil",c:"ODTU",type:"holiday",t:"Yılbaşı",d:"2027-01-01"},
+  {id:"a-final",c:"ODTU",type:"academic",t:"Final Sınavları",d:"2027-01-04",end:"2027-01-16",wk:true},
+  {id:"a-notilan",c:"ODTU",type:"academic",t:"Notların İlanı",d:"2027-01-25"},
+  {id:"a-inc",c:"ODTU",type:"academic",t:"Maddi hata & Incomplete son gün",d:"2027-01-27",n:"24:00"},
+  {id:"a-bahar",c:"ODTU",type:"academic",t:"Bahar Dönemi Ders Kayıtları",d:"2027-02-10",end:"2027-02-12"},
+  // EE303
+  {id:"303-q1",c:"EE303",type:"quiz",t:"EE303 Quiz 1",d:"2026-10-19",n:"Her quiz %6"},
+  {id:"303-q2",c:"EE303",type:"quiz",t:"EE303 Quiz 2",d:"2026-11-02"},
+  {id:"303-q3",c:"EE303",type:"quiz",t:"EE303 Quiz 3",d:"2026-11-16"},
+  {id:"303-mt",c:"EE303",type:"exam",t:"EE303 Midterm",d:"2026-11-30",n:"%30"},
+  {id:"303-q4",c:"EE303",type:"quiz",t:"EE303 Quiz 4",d:"2026-12-21"},
+  {id:"303-demo",c:"EE303",type:"lab",t:"EE303 Lab Demosu (zorunlu)",d:null,hint:"14. hafta (28–31 Ara) · D304",win:["2026-12-28","2026-12-31"],n:"Finale girmek için demoya ve 12 discussion oturumunun en az 10'una katılım şart"},
+  {id:"303-fin",c:"EE303",type:"exam",t:"EE303 Final",d:null,hint:"Final haftası (4–16 Oca) · %40",win:["2027-01-04","2027-01-16"]},
+  // EE361
+  {id:"361-genai",c:"EE361",type:"deadline",t:"EE361 GenAI politikası onayı",d:"2026-10-16",w:0.5,n:"3. haftanın sonuna kadar ODTUClass'ta onayla, yoksa ödev/quiz notlanmaz"},
+  {id:"361-q1",c:"EE361",type:"quiz",t:"EE361 Quiz 1",d:"2026-10-23",n:"5 quiz toplam %15"},
+  {id:"361-q2",c:"EE361",type:"quiz",t:"EE361 Quiz 2",d:"2026-11-10"},
+  {id:"361-mt1",c:"EE361",type:"exam",t:"EE361 Midterm 1",d:"2026-11-23",n:"%15"},
+  {id:"361-q3",c:"EE361",type:"quiz",t:"EE361 Quiz 3",d:"2026-12-04"},
+  {id:"361-q4",c:"EE361",type:"quiz",t:"EE361 Quiz 4",d:"2026-12-19",n:"Cumartesi"},
+  {id:"361-mt2",c:"EE361",type:"exam",t:"EE361 Midterm 2",d:"2026-12-24",n:"%15"},
+  {id:"361-safety",c:"EE361",type:"quiz",t:"EE361 Safety Quiz",d:null,hint:"3. hafta (12–16 Eki) · ODTUClass · en az 70/100",win:["2026-10-12","2026-10-18"],n:"Geçemezsen laba giremezsin, NA alırsın"},
+  {id:"361-pref",c:"EE361",type:"deadline",t:"EE361 Lab bölüm tercih formu",d:null,hint:"Hafta 1–3 · ODTUClass",win:["2026-09-28","2026-10-18"],w:0.5},
+  {id:"361-lab1",c:"EE361",type:"lab",t:"EE361 Lab 1",d:null,hint:"Hafta 6–7 (2–13 Kas)",win:["2026-11-02","2026-11-13"],lab:"EE361"},
+  {id:"361-lab2",c:"EE361",type:"lab",t:"EE361 Lab 2",d:null,hint:"Hafta 8–9 (16–27 Kas)",win:["2026-11-16","2026-11-27"],lab:"EE361"},
+  {id:"361-lab3",c:"EE361",type:"lab",t:"EE361 Lab 3",d:null,hint:"Hafta 10–11 (30 Kas–11 Ara)",win:["2026-11-30","2026-12-11"],lab:"EE361"},
+  {id:"361-lab45",c:"EE361",type:"lab",t:"EE361 Lab 4 & 5",d:null,hint:"Hafta 13–14 (21–31 Ara)",win:["2026-12-21","2026-12-31"],lab:"EE361"},
+  {id:"361-q5",c:"EE361",type:"quiz",t:"EE361 Quiz 5",d:null,hint:"14. hafta (28–31 Ara)",win:["2026-12-28","2026-12-31"]},
+  {id:"361-fin",c:"EE361",type:"exam",t:"EE361 Final",d:null,hint:"Final haftası · %30 · katılım zorunlu",win:["2027-01-04","2027-01-16"]},
+  // EE402
+  {id:"402-mt1",c:"EE402",type:"exam",t:"EE402 Midterm 1",d:"2026-11-04",n:"%30 · kapalı kitap"},
+  {id:"402-mt2",c:"EE402",type:"exam",t:"EE402 Midterm 2",d:"2026-12-01",n:"%30 · kapalı kitap"},
+  {id:"402-fin",c:"EE402",type:"exam",t:"EE402 Final",d:null,hint:"Final haftası · %40",win:["2027-01-04","2027-01-16"]},
+  // EE407
+  {id:"407-mt",c:"EE407",type:"exam",t:"EE407 Midterm",d:"2026-12-09",n:"%25"},
+  {id:"407-lab1",c:"EE407",type:"lab",t:"EE407 Deney 1",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-lab2",c:"EE407",type:"lab",t:"EE407 Deney 2",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-lab3",c:"EE407",type:"lab",t:"EE407 Deney 3",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-lab4",c:"EE407",type:"lab",t:"EE407 Deney 4",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-lab5",c:"EE407",type:"lab",t:"EE407 Deney 5",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-lab6",c:"EE407",type:"lab",t:"EE407 Deney 6",d:null,hint:"Perşembe 08:40–11:30 · haftası belli değil",lab:"EE407"},
+  {id:"407-proj",c:"EE407",type:"deadline",t:"EE407 Dönem projesi",d:null,hint:"Konular sonra açıklanacak · %10"},
+  {id:"407-fin",c:"EE407",type:"exam",t:"EE407 Final",d:null,hint:"Final haftası · %35",win:["2027-01-04","2027-01-16"]},
+  // EE493
+  {id:"493-team",c:"EE493",type:"deadline",t:"EE493 Takım başvuru formu",d:"2026-10-02",due:"23:59",w:1},
+  {id:"493-ds",c:"EE493",type:"event",t:"EE493 DS koordinatör toplantısı",d:"2026-10-07",s:"14:40",e:"15:30"},
+  {id:"493-bs",c:"EE493",type:"deadline",t:"EE493 Business Statement",d:"2026-10-16",due:"23:59",n:"%5"},
+  {id:"493-prop",c:"EE493",type:"deadline",t:"EE493 Proposal Report",d:"2026-10-30",due:"23:59",n:"%10"},
+  {id:"493-test",c:"EE493",type:"deadline",t:"EE493 Test Document",d:"2026-12-04",due:"23:59",n:"Test Doc + Demo %20"},
+  {id:"493-cdr",c:"EE493",type:"deadline",t:"EE493 Conceptual Design Report",d:"2026-12-25",due:"23:59",n:"%20",w:3},
+  {id:"493-demo",c:"EE493",type:"lab",t:"EE493 Module Test Demo",d:null,hint:"12. hafta (14–18 Ara) · DS koordinatörüne",win:["2026-12-14","2026-12-18"],w:2},
+  {id:"493-pres",c:"EE493",type:"exam",t:"EE493 Sunum",d:null,hint:"14. hafta (28–31 Ara) · %25",win:["2026-12-28","2026-12-31"]}
+];
+const NOTES=[["EE493","Haftalık ilerleme raporları: 3. haftadan 12. haftaya kadar her hafta"]];
+
+/* Ders bilgileri (syllabus'lardan) */
+const ODTUCLASS="https://odtuclass.metu.edu.tr";
+const INFO={
+  EE303:{people:[["Ders (Grup 9–10)","Özgür Ergül · C-102"],["Discussion (Grup 9)","Özgür Ergül · C-102"],["Diğer ders hocası","Lale Alatan · C-209"],["Asistan","Enfal Çabuk","enfal@metu.edu.tr"]],
+    book:"D. K. Cheng, Fundamentals of Engineering Electromagnetics (Pearson, 2014)",
+    rules:["Finale girmek için 12 discussion oturumunun en az 10'una ve 14. haftadaki lab demosuna katılım zorunlu.","Discussion'dan önce haftanın okumasını bitir, problem setine bak."],
+    links:[["ODTUClass",ODTUCLASS]]},
+  EE361:{people:[["Koordinatör","Keyvan Fıruzi","keyvan@metu.edu.tr"],["Hocalar","Murat Göl · Ulaş Karaağaç · Ozan Keysan · İlker Şahin"],["Asistan koordinatörü","İsmail Macit · C-114","ismacit@metu.edu.tr"]],
+    book:"P. C. Sen, Principles of Electric Machines and Power Electronics (3. baskı)",
+    rules:["Tüm deneylere katılım zorunlu, yoksa NA.","Finale girmek zorunlu, yoksa NA.","Laba girmek için Safety Quiz'den en az 70/100.","GenAI politikasını 3. hafta sonuna kadar ODTUClass'ta onayla.","Sorun olursa sıra: asistan → ofis saati → koordinatör."],
+    links:[["ODTUClass",ODTUCLASS]]},
+  EE402:{people:[["Hoca","Kenan Ahıska","kahiska@metu.edu.tr"],["Asistan","Tarık Berke Akdoğan","tarika@metu.edu.tr"]],
+    book:"K. Ogata, Discrete-Time Control Systems · Mert Ankaralı'nın ders notları",
+    rules:["Tüm sınavlar kapalı kitap; internetsiz hesap makinesi serbest.","Belgesiz make-up yok."],
+    links:[["Ders notları (GitHub)","https://github.com/mertankarali/Lecture-Notes/"],["Video dersler","https://www.youtube.com/watch?v=u0k4-7pnQp4&list=PLkzMUaHD5TOMXk5XkGtw6fBVQHemUKxx5"],["ODTUClass",ODTUCLASS]]},
+  EE407:{people:[["Hoca","Afşar Saranlı · EZ-10","afsars@metu.edu.tr"],["Asistan","Atakan Durmaz","atakand@metu.edu.tr"],["Asistan","Anıl Gülbeden","gulbeden@metu.edu.tr"],["Lab mühendisi","Mesut Özer"]],
+    book:"Ders kitabı yok · Chao, Process Control: A First Course with MATLAB",
+    rules:["6 lab deneyi, Perşembe 08:40–11:30 oturumunda; haftalar sonra belli olacak.","GenAI serbest ama kullandıysan belirtmelisin.","Resmi mazeretle 1 make-up sınav ve 1 lab telafisi."],
+    links:[["Control Guru","http://controlguru.org"],["ODTUClass",ODTUCLASS]]},
+  EE493:{people:[["DS koordinatörleri","S. Figen Öktem Seven · Murat Eyüboğlu · Elif Tuğçe Ceran · Selçuk Yerci · Fatih Kamışlı · Murat Temiz · Yusuf Samet Yaraş"]],
+    book:"",
+    rules:["3. haftadan 12. haftaya kadar her hafta ilerleme raporu.","Ders katılımı notun %5'i."],
+    links:[["Capstone sitesi","http://capstone.eee.metu.edu.tr"],["ODTUClass",ODTUCLASS]]}
+};
+/* Not bileşenleri (syllabus ağırlıkları) */
+const GRADES={
+  EE303:[{id:"att",l:"Discussion katılımı",w:6},{id:"q1",l:"Quiz 1",w:6},{id:"q2",l:"Quiz 2",w:6},{id:"q3",l:"Quiz 3",w:6},{id:"q4",l:"Quiz 4",w:6},{id:"mt",l:"Midterm",w:30},{id:"fin",l:"Final",w:40,final:1}],
+  EE361:[{id:"mt1",l:"Midterm 1",w:15},{id:"mt2",l:"Midterm 2",w:15},{id:"q1",l:"Quiz 1",w:3},{id:"q2",l:"Quiz 2",w:3},{id:"q3",l:"Quiz 3",w:3},{id:"q4",l:"Quiz 4",w:3},{id:"q5",l:"Quiz 5",w:3},{id:"l1",l:"Lab 1",w:5},{id:"l2",l:"Lab 2",w:5},{id:"l3",l:"Lab 3",w:5},{id:"l4",l:"Lab 4",w:5},{id:"l5",l:"Lab 5",w:5},{id:"fin",l:"Final",w:30,final:1}],
+  EE402:[{id:"mt1",l:"Midterm 1",w:30},{id:"mt2",l:"Midterm 2",w:30},{id:"fin",l:"Final",w:40,final:1}],
+  EE407:[{id:"att",l:"Katılım",w:5},{id:"mt",l:"Midterm",w:25},{id:"proj",l:"Dönem projesi",w:10},{id:"lab",l:"Lab & quizler",w:25},{id:"fin",l:"Final",w:35,final:1}],
+  EE493:[{id:"wk",l:"Haftalık toplantı + takım + logbook",w:15},{id:"bs",l:"Business Statement",w:5},{id:"prop",l:"Proposal Report",w:10},{id:"test",l:"Test Doc & Module Demo",w:20},{id:"cdr",l:"Conceptual Design Report",w:20},{id:"pres",l:"Conceptual Design Sunumu",w:25},{id:"att",l:"Ders katılımı",w:5}]
+};
+/* Devam takibi */
+const ATT_RULES=[
+  {c:"EE303",slots:["ee303d"],label:"EE303 Discussion",maxMiss:2,rule:"Final şartı: 12'de en az 10"},
+  {c:"EE361",labs:["361-lab1","361-lab2","361-lab3","361-lab45"],label:"EE361 Lablar",rule:"Hepsi zorunlu (yoksa NA)"},
+  {c:"EE407",labs:["407-lab1","407-lab2","407-lab3","407-lab4","407-lab5","407-lab6"],label:"EE407 Lablar",rule:"6 deney · Perşembe sabah"},
+  {c:"EE407",slots:["ee407a","ee407b"],label:"EE407 Ders katılımı",rule:"Notun %5'i"},
+  {c:"EE493",slots:["ee493s"],label:"EE493 Seminer katılımı",rule:"Notun %5'i"}
+];
+
+/* =====================================================================
+   YARDIMCILAR
+   ===================================================================== */
+const MONTHS=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const MON3=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"];
+const DOW=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
+const DOWL=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+const TYPE_TR={exam:"Sınav",quiz:"Quiz",deadline:"Teslim",lab:"Lab / Demo",event:"Etkinlik",academic:"Akademik",holiday:"Tatil"};
+const ORDER={exam:0,quiz:1,deadline:2,holiday:3,lab:4,event:5,academic:6};
+const LOADW={exam:3,quiz:1,deadline:2,lab:1,event:0,academic:0,holiday:0};
+const LV_TR=["Boş","Hafif","Orta","Yoğun"];
+const pd=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const key=dt=>dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");
+const addD=(dt,n)=>{const x=new Date(dt);x.setDate(x.getDate()+n);return x};
+const dowIdx=dt=>(dt.getDay()+6)%7;
+const monday=dt=>addD(dt,-dowIdx(dt));
+let now=new Date(), today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+const diffDays=(a,b)=>Math.round((a-b)/86400000);
+const weekNo=dt=>{const w=Math.floor(diffDays(dt,pd(SEM_START))/7)+1;return (w>=1&&w<=20)?w:null};
+const toMin=s=>{const[h,m]=s.split(":").map(Number);return h*60+m};
+const hhmm=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const fmtD=dt=>`${dt.getDate()} ${MON3[dt.getMonth()]}`;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const fmtRel=mins=>mins<60?`${mins} dk`:`${Math.floor(mins/60)} sa${mins%60?" "+(mins%60)+" dk":""}`;
+const canDone=e=>!["academic","holiday"].includes(e.type);
+
+/* =====================================================================
+   DURUM (tarayıcıda saklanır)
+   ===================================================================== */
+const SKEY="guz2026.takvim.v2";
+const blank=()=>({place:{},custom:[],cancel:[],hidden:[],view:"week",showClasses:true,att:{},done:[],sub:{},cnote:{},grades:{},target:{}});
+let S=(()=>{try{const v=JSON.parse(localStorage.getItem(SKEY));return v?Object.assign(blank(),v):blank()}catch(_){return blank()}})();
+let undoStack=null;
+function persist(){try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(_){}}
+function save(){S._ts=Date.now();persist();schedulePush()}
+const snapshot=()=>JSON.stringify(S);
+function commit(msg,before,warn){save();renderAll();if(msg)toast(msg,before,warn)}
+
+let anchor=(today>=pd("2026-09-01")&&today<=pd("2027-02-28"))?new Date(today):pd("2026-10-05");
+const narrow=()=>window.matchMedia("(max-width:720px)").matches;
+
+function allEvents(){
+  const out=[];
+  BASE.forEach(b=>{const p=S.place[b.id],e=Object.assign({},b,{src:"base"});if(p){Object.assign(e,p);e.user=true}out.push(e)});
+  S.custom.forEach(c=>out.push(Object.assign({src:"custom",user:true},c)));
+  out.forEach(e=>{e.sd=e.d?pd(e.d):null;e.ed=e.d?(e.end?pd(e.end):e.sd):null;e.done=S.done.includes(e.id)});
+  return out;
+}
+const isHidden=c=>S.hidden.includes(c);
+const dated=()=>allEvents().filter(e=>e.d&&!isHidden(e.c));
+const undated=()=>allEvents().filter(e=>!e.d&&!isHidden(e.c));
+const findEv=id=>allEvents().find(e=>e.id===id);
+function eventsOn(dt,list){
+  const k=+dt,wkend=dowIdx(dt)>=5;
+  return (list||dated()).filter(e=>{
+    if(!e.sd||k<+e.sd||k>+e.ed)return false;
+    if(e.end&&!e.wk&&wkend&&+e.sd!==k&&+e.ed!==k)return false;
+    return true;
+  }).sort((a,b)=>(a.end?1:0)-(b.end?1:0)||ORDER[a.type]-ORDER[b.type]||(a.s||"").localeCompare(b.s||""));
+}
+function holidayFrom(dt){const h=HOLI.find(x=>x.d===key(dt));return h?(h.from?toMin(h.from):0):null}
+function classesRaw(dt){
+  if(dt<pd(SEM_START)||dt>pd(SEM_END))return[];
+  const k=key(dt),w=weekNo(dt),hf=holidayFrom(dt),out=[];
+  SLOTS.forEach(sl=>{
+    if(sl.dow!==dowIdx(dt))return;
+    if(sl.weeks&&!sl.weeks.includes(w))return;
+    const o=Object.assign({s:sl.s,e:sl.e},sl.over&&sl.over[k]);
+    if(hf!==null&&toMin(o.s)>=hf)return;
+    const id=sl.id+"@"+k;
+    out.push({cls:true,id,slot:sl,c:sl.c,s:o.s,e:o.e,date:dt,week:w,topic:sl.topics&&sl.topics[w],note:sl.notes&&sl.notes[k],
+      cancelled:S.cancel.includes(id),att:S.att[id],cnote:S.cnote[id]});
+  });
+  return out;
+}
+const classesOn=dt=>S.showClasses?classesRaw(dt).filter(c=>!isHidden(c.c)):[];
+function allOccurrences(pred){const out=[];for(let d=pd(SEM_START);d<=pd(SEM_END);d=addD(d,1))classesRaw(d).forEach(c=>{if(pred(c))out.push(c)});return out}
+const clsLabel=sl=>sl.k==="Ders"?sl.c:`${sl.c} ${sl.k}`;
+
+/* haftalık yük */
+function weekLoad(mon,list){
+  const end=addD(mon,6),evs=(list||dated()).filter(e=>e.sd>=mon&&e.sd<=end&&!e.end);
+  const wt=e=>e.w!=null?e.w:(LOADW[e.type]||0);
+  const score=evs.reduce((a,e)=>a+wt(e),0);
+  return {score,lv:score<=0?0:score<3?1:score<6?2:3,items:evs.filter(e=>wt(e)>0)};
+}
+
+/* çakışma kontrolü */
+function conflictsFor(dk,s,e,selfId){
+  if(!dk)return{hard:[],soft:[]};
+  const dt=pd(dk),hard=[],soft=[],evs=eventsOn(dt,allEvents());
+  if(s){
+    const a=toMin(s),b=e?toMin(e):a+60;
+    classesRaw(dt).filter(c=>!c.cancelled).forEach(c=>{if(toMin(c.s)<b&&toMin(c.e)>a)hard.push(`${clsLabel(c.slot)} ${c.s}–${c.e}`)});
+    evs.filter(x=>x.s&&x.id!==selfId).forEach(x=>{const xa=toMin(x.s),xb=x.e?toMin(x.e):xa+60;if(xa<b&&xb>a)hard.push(`${x.t} ${x.s}`)});
+  }
+  evs.filter(x=>!x.s&&x.id!==selfId&&(x.type==="exam"||x.type==="quiz")).forEach(x=>soft.push(x.t));
+  const me=selfId&&findEv(selfId), ls=me&&me.lab&&LAB_SLOT[me.lab];
+  if(ls&&dowIdx(dt)!==ls.dow) soft.unshift(`${me.lab} labları ${DOWL[ls.dow]} günü`);
+  return{hard,soft};
+}
+function conflictText(cf){const p=[];if(cf.hard.length)p.push("Çakışıyor: "+cf.hard.join(", "));const lab=cf.soft.filter(x=>/ labları /.test(x)),oth=cf.soft.filter(x=>!/ labları /.test(x));if(lab.length)p.push(lab[0]);if(oth.length)p.push("Aynı gün: "+oth.join(", "));return p.join(" · ")}
+
+/* =====================================================================
+   ÜST ŞERİT
+   ===================================================================== */
+function renderStrip(){
+  now=new Date(); today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const nm=now.getHours()*60+now.getMinutes();
+  let cur=null,next=null;
+  for(let i=0;i<14&&!next;i++){
+    const d=addD(today,i);
+    const items=[...classesOn(d).filter(c=>!c.cancelled).map(c=>({attr:`data-cls="${c.id}"`,a:toMin(c.s),b:toMin(c.e),label:clsLabel(c.slot),room:c.slot.room,c:c.c})),
+      ...eventsOn(d).filter(e=>e.s&&!e.done).map(e=>({attr:`data-ev="${e.id}"`,a:toMin(e.s),b:e.e?toMin(e.e):toMin(e.s)+60,label:e.t,room:"",c:e.c}))].sort((x,y)=>x.a-y.a);
+    for(const it of items){
+      it.d=d;
+      if(i===0&&it.a<=nm&&it.b>nm){if(!cur)cur=it;continue}
+      if(i>0||it.a>nm){next=it;break}
+    }
+  }
+  let a;
+  if(cur) a=`<div class="slbl">Şu an</div><div class="sbig k k-${cur.c}" ${cur.attr}><span class="dot"></span>${esc(cur.label)}${cur.room?" · "+cur.room:""}</div><div class="ssm">${hhmm(cur.b)}'a kadar${next?` · sonra <b>${esc(next.label)}</b> ${hhmm(next.a)}`:""}</div>`;
+  else if(next){
+    const dd=diffDays(next.d,today);
+    const when=dd===0?`Bugün ${hhmm(next.a)} · ${fmtRel(next.a-nm)} sonra`:dd===1?`Yarın ${hhmm(next.a)}`:`${DOWL[dowIdx(next.d)]}, ${fmtD(next.d)} ${hhmm(next.a)}`;
+    a=`<div class="slbl">Sıradaki ders</div><div class="sbig k k-${next.c}" ${next.attr}><span class="dot"></span>${esc(next.label)}${next.room?" · "+next.room:""}</div><div class="ssm">${when}</div>`;
+  } else a=`<div class="slbl">Sıradaki ders</div><div class="sbig">—</div><div class="ssm">Önümüzdeki iki hafta ders yok</div>`;
+  const up=dated().filter(e=>!e.done&&diffDays(e.sd,today)>=0).sort((x,y)=>x.sd-y.sd||ORDER[x.type]-ORDER[y.type]);
+  const ex=up.find(e=>e.type==="exam"||e.type==="quiz"), dl=up.find(e=>e.type==="deadline");
+  const cd=e=>{const n=diffDays(e.sd,today);return n===0?"bugün":n===1?"yarın":n+" gün"};
+  const b=`<div class="slbl">Sıradaki sınav</div>`+(ex?`<div class="sbig k k-${ex.c}" data-ev="${ex.id}"><span class="dot"></span>${esc(ex.t)} · ${cd(ex)}</div>`:`<div class="sbig">—</div>`)+
+    (dl?`<div class="ssm">Sıradaki teslim: <b>${esc(dl.t)}</b> · ${cd(dl)}</div>`:"");
+  const w=weekNo(today), list=dated();
+  let segs="";
+  for(let i=1;i<=16;i++){
+    const mon=addD(pd(SEM_START),(i-1)*7), L=weekLoad(mon,list), isCur=+mon===+monday(today), past=addD(mon,7)<=today;
+    const tip=`${i<=14?i+". hafta":"Final haftası"} · ${fmtD(mon)}–${fmtD(addD(mon,6))} · ${LV_TR[L.lv]}${L.items.length?": "+L.items.map(x=>x.t).join(", "):""}`;
+    segs+=`<div class="seg2 L${L.lv}${isCur?" cur":""}${past?" past":""}" data-wk="${key(mon)}" title="${esc(tip)}"><span>${i<=14?i:"F"}</span></div>`;
+  }
+  const semTxt=w&&w<=14?`${w}. hafta / 14`:w&&w<=16?"Final dönemi":today<pd(SEM_START)?"Dönem başlamadı":"Dönem bitti";
+  const c=`<div class="slbl" style="display:flex;justify-content:space-between;gap:8px"><span>Dönem · ${semTxt}</span><span style="text-transform:none;letter-spacing:0;font-weight:500">haftalık yük · tıkla, haftaya git</span></div><div class="prog">${segs}</div>
+    <div class="legend"><span><i class="L0"></i>Boş</span><span><i class="L1"></i>Hafif</span><span><i class="L2"></i>Orta</span><span><i class="L3"></i>Yoğun</span></div>`;
+  const el=$("strip"); el.innerHTML=`<div>${a}</div><div>${b}</div><div>${c}</div>`;
+  el.querySelectorAll("[data-wk]").forEach(s=>s.onclick=()=>{anchor=pd(s.dataset.wk);setView("week")});
+  bindChips(el);
+}
+
+/* =====================================================================
+   FİLTRELER
+   ===================================================================== */
+function renderFilters(){
+  const f=$("filters");
+  f.innerHTML=Object.entries(COURSES).map(([k,v])=>
+    `<button class="chipf k k-${k}${isHidden(k)?" off":""}" data-c="${k}"><span class="dot"></span><b>${v.label||k}</b><span class="nm">${v.name}</span></button>`).join("")+
+    `<button class="chipf tog${S.showClasses?"":" off"}" id="togCls"><span class="dot"></span><b>Ders saatleri</b></button>`;
+  f.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const c=b.dataset.c;S.hidden=isHidden(c)?S.hidden.filter(x=>x!==c):[...S.hidden,c];persist();renderAll()});
+  $("togCls").onclick=()=>{S.showClasses=!S.showClasses;persist();renderAll()};
+}
+
+/* =====================================================================
+   ÇİPLER
+   ===================================================================== */
+function chip(e,dt){
+  const cont=e.end&&dt&&+dt!==+e.sd;
+  const cls=["ev","k","k-"+e.c,e.type,cont?"cont":"",e.user?"user":"",e.done?"done":""].join(" ");
+  const drag=canDone(e)?`draggable="true" data-drag="${e.id}"`:"";
+  return `<span class="${cls}" data-ev="${e.id}" ${drag} title="${esc(e.t)}">${cont?"↳ ":""}${e.s?e.s+" ":""}${esc(e.t)}</span>`;
+}
+function bindChips(root){
+  root.querySelectorAll("[data-ev]").forEach(el=>el.addEventListener("click",ev=>{ev.stopPropagation();openEvent(el.dataset.ev)}));
+  root.querySelectorAll("[data-cls]").forEach(el=>el.addEventListener("click",ev=>{ev.stopPropagation();openClass(el.dataset.cls)}));
+  root.querySelectorAll("[data-done]").forEach(el=>el.addEventListener("click",ev=>{ev.stopPropagation();toggleDone(el.dataset.done)}));
+  bindDrag(root);
+}
+const attMark=c=>c.att===true?`<span class="mk ok" title="Katıldın">✓</span>`:c.att===false?`<span class="mk no" title="Katılmadın">✗</span>`:(c.cnote||c.note)?`<span class="mk inf" title="Not var">✎</span>`:"";
+
+/* =====================================================================
+   HAFTA
+   ===================================================================== */
+const PXM=0.8;
+function renderWeek(){
+  const m=$("main"), mon=monday(anchor), days=[...Array(7)].map((_,i)=>addD(mon,i));
+  let t0=8*60+30,t1=17*60+40;
+  days.forEach(d=>{
+    classesOn(d).forEach(c=>{t0=Math.min(t0,toMin(c.s)-10);t1=Math.max(t1,toMin(c.e)+10)});
+    eventsOn(d).filter(e=>e.s).forEach(e=>{t0=Math.min(t0,toMin(e.s)-10);t1=Math.max(t1,toMin(e.e||e.s)+20)});
+  });
+  t0=Math.floor(t0/60)*60; t1=Math.ceil(t1/60)*60;
+  const H=(t1-t0)*PXM, w=weekNo(mon), sun=days[6], L=weekLoad(mon);
+  const title=mon.getMonth()===sun.getMonth()?`${mon.getDate()}–${sun.getDate()} ${MONTHS[mon.getMonth()]} ${mon.getFullYear()}`:`${fmtD(mon)} – ${fmtD(sun)} ${sun.getFullYear()}`;
+  let h=`<div class="mainhead"><h2>${title}${w?`<span class="wkbadge">${w}. hafta</span>`:""}${L.lv?`<span class="lvpill L${L.lv}">${LV_TR[L.lv]} hafta</span>`:""}</h2>
+    <div class="nav"><button class="btn icon" id="prev" aria-label="Önceki hafta">‹</button><button class="btn" id="tday">Bugün</button><button class="btn icon" id="next" aria-label="Sonraki hafta">›</button></div></div>
+    <div class="wscroll"><div class="week"><div class="corner"></div>`;
+  days.forEach((d,i)=>{
+    const hol=holidayFrom(d)===0, ex=eventsOn(d).filter(e=>(e.type==="exam"||e.type==="quiz")&&!e.end);
+    h+=`<div class="wh${i>=5?" wknd":""}${hol?" hol":""}${+d===+today?" today":""}${d<today?" past":""}" data-goday="${key(d)}" title="Gün görünümüne geç"><div class="dw">${DOW[i]}</div><span class="dn">${d.getDate()}</span>
+      <div class="exm">${ex.map(e=>`<i class="k k-${e.c}" title="${esc(e.t)}"></i>`).join("")}</div></div>`;
+  });
+  h+=`<div class="alllbl">gün boyu</div>`;
+  days.forEach((d,i)=>{h+=`<div class="wall${i>=5?" wknd":""}" data-drop="${key(d)}">${eventsOn(d).filter(e=>!e.s).map(e=>chip(e,d)).join("")}</div>`});
+  h+=`<div class="times" style="height:${H}px">`;
+  for(let t=t0+60;t<t1;t+=60) h+=`<span style="top:${(t-t0)*PXM}px">${hhmm(t)}</span>`;
+  h+=`</div>`;
+  days.forEach((d,i)=>{
+    const hol=holidayFrom(d)===0;
+    h+=`<div class="wcol${i>=5?" wknd":""}${hol?" hol":""}${d<today?" past":""}" style="height:${H}px" data-drop="${key(d)}" data-t0="${t0}">`;
+    for(let t=t0+30;t<t1;t+=30) h+=`<div class="hline${t%60?" half":""}" style="top:${(t-t0)*PXM}px"></div>`;
+    const items=[...classesOn(d).map(c=>({k:"c",o:c,a:toMin(c.s),b:toMin(c.e)})),
+                 ...eventsOn(d).filter(e=>e.s).map(e=>({k:"e",o:e,a:toMin(e.s),b:e.e?toMin(e.e):toMin(e.s)+60}))].sort((x,y)=>x.a-y.a||y.b-x.b);
+    layoutLanes(items);
+    items.forEach(it=>{
+      const top=(it.a-t0)*PXM, ht=Math.max(18,(it.b-it.a)*PXM-2), wd=100/it.n, lf=it.lane*wd;
+      const pos=`top:${top}px;height:${ht}px;left:calc(${lf}% + 2px);width:calc(${wd}% - 4px)`;
+      if(it.k==="c"){
+        const c=it.o, sl=c.slot, label=clsLabel(sl);
+        h+=`<div class="blk k k-${c.c}${sl.light?" light":""}${c.cancelled?" cancel":""}" style="${pos}" data-cls="${c.id}" title="${esc(label)} ${c.s}–${c.e}">
+          ${attMark(c)}<b>${esc(label)}</b><div class="tm">${c.s}–${c.e}${sl.room?" · "+sl.room:""}</div>${ht>58&&c.topic?`<div class="rm">${esc(c.topic)}</div>`:""}</div>`;
+      }else{
+        const e=it.o;
+        h+=`<div class="blk evt k k-${e.c} ${e.type}${e.done?" done":""}" style="${pos}" data-ev="${e.id}" draggable="true" data-drag="${e.id}" title="${esc(e.t)} · saati değiştirmek için sürükle">
+          <b>${esc(e.t)}</b><div class="tm">${e.s}${e.e?"–"+e.e:""}</div></div>`;
+      }
+    });
+    if(+d===+today){const nm=now.getHours()*60+now.getMinutes();if(nm>t0&&nm<t1)h+=`<div class="nowline" style="top:${(nm-t0)*PXM}px"></div>`}
+    h+=`</div>`;
+  });
+  m.innerHTML=h+`</div></div>`;
+  $("prev").onclick=()=>{anchor=addD(anchor,-7);renderMain()};
+  $("next").onclick=()=>{anchor=addD(anchor,7);renderMain()};
+  $("tday").onclick=()=>{anchor=new Date(today);renderMain()};
+  m.querySelectorAll("[data-goday]").forEach(x=>x.onclick=()=>{anchor=pd(x.dataset.goday);setView("day")});
+  bindChips(m); bindDrops(m);
+}
+function layoutLanes(items){
+  const lanes=[];let cluster=[],cEnd=-1;
+  const flush=()=>{const n=Math.max(...cluster.map(x=>x.lane))+1;cluster.forEach(x=>x.n=n);cluster=[]};
+  items.forEach(it=>{
+    if(it.a>=cEnd&&cluster.length){flush();lanes.length=0}
+    let l=lanes.findIndex(end=>end<=it.a);if(l<0){l=lanes.length;lanes.push(0)}
+    lanes[l]=it.b;it.lane=l;cluster.push(it);cEnd=Math.max(cEnd,it.b);
+  });
+  if(cluster.length)flush();
+}
+
+/* =====================================================================
+   GÜN
+   ===================================================================== */
+function renderDay(){
+  const m=$("main"), d=new Date(anchor.getFullYear(),anchor.getMonth(),anchor.getDate()), w=weekNo(d), nm=now.getHours()*60+now.getMinutes();
+  const allday=eventsOn(d).filter(e=>!e.s);
+  const items=[...classesOn(d).map(c=>({k:"c",o:c,a:toMin(c.s),b:toMin(c.e)})),
+               ...eventsOn(d).filter(e=>e.s).map(e=>({k:"e",o:e,a:toMin(e.s),b:e.e?toMin(e.e):toMin(e.s)+60}))].sort((x,y)=>x.a-y.a);
+  let h=`<div class="mainhead"><h2>${DOWL[dowIdx(d)]}, ${d.getDate()} ${MONTHS[d.getMonth()]}${w?`<span class="wkbadge">${w}. hafta</span>`:""}${+d===+today?`<span class="lvpill L1">Bugün</span>`:""}</h2>
+    <div class="nav"><button class="btn icon" id="prev" aria-label="Önceki gün">‹</button><button class="btn" id="tday">Bugün</button><button class="btn icon" id="next" aria-label="Sonraki gün">›</button></div></div>
+    <div class="dayview" data-drop="${key(d)}">
+    <div class="dallday">${allday.length?allday.map(e=>chip(e,d)).join(""):`<span style="color:var(--muted);font-size:12.5px">Gün boyu etkinlik yok</span>`}</div>`;
+  if(!items.length) h+=`<div class="empty" style="padding:18px 0">${holidayFrom(d)===0?"Tatil 🎉":"Bu gün ders yok."}</div>`;
+  items.forEach(it=>{
+    const isNow=+d===+today&&it.a<=nm&&it.b>nm;
+    if(it.k==="c"){
+      const c=it.o,sl=c.slot,label=sl.k==="Ders"?`${sl.c} · ${COURSES[sl.c].name}`:`${sl.c} ${sl.k}`;
+      h+=`<div class="drow"><div class="dt">${c.s}<small>${c.e}</small></div>
+        <div class="dcard k k-${c.c}${sl.light?" light":""}${c.cancelled?" cancel":""}${isNow?" now":""}" data-cls="${c.id}">${attMark(c)}
+        <b>${esc(label)}</b><div class="meta">${[sl.room,c.topic].filter(Boolean).map(esc).join(" · ")}</div>
+        ${c.note?`<div class="nt">${esc(c.note)}</div>`:""}${c.cnote?`<div class="nt">✎ ${esc(c.cnote)}</div>`:""}</div></div>`;
+    }else{
+      const e=it.o;
+      h+=`<div class="drow"><div class="dt">${e.s}<small>${e.e||""}</small></div>
+        <div class="dcard evt k k-${e.c} ${e.type}${e.done?" done":""}${isNow?" now":""}" data-ev="${e.id}"><b>${esc(e.t)}</b><div class="meta">${TYPE_TR[e.type]}${e.n?" · "+esc(e.n):""}</div></div></div>`;
+    }
+  });
+  m.innerHTML=h+`</div>`;
+  $("prev").onclick=()=>{anchor=addD(anchor,-1);renderMain()};
+  $("next").onclick=()=>{anchor=addD(anchor,1);renderMain()};
+  $("tday").onclick=()=>{anchor=new Date(today);renderMain()};
+  bindChips(m); bindDrops(m);
+}
+
+/* =====================================================================
+   AY
+   ===================================================================== */
+function renderMonth(){
+  const m=$("main"), first=new Date(anchor.getFullYear(),anchor.getMonth(),1), start=monday(first);
+  const last=new Date(anchor.getFullYear(),anchor.getMonth()+1,0);
+  const rows=Math.ceil((dowIdx(first)+last.getDate())/7), list=dated();
+  let h=`<div class="mainhead"><h2>${MONTHS[first.getMonth()]} ${first.getFullYear()}</h2>
+    <div class="nav"><button class="btn icon" id="prev" aria-label="Önceki ay">‹</button><button class="btn" id="tday">Bugün</button><button class="btn icon" id="next" aria-label="Sonraki ay">›</button></div></div>
+    <div class="grid"><div class="dow" title="Dönem haftası ve yük">H</div>${DOW.map(d=>`<div class="dow">${d}</div>`).join("")}`;
+  for(let r=0;r<rows;r++){
+    const mon=addD(start,r*7), w=weekNo(mon), L=weekLoad(mon,list);
+    h+=`<div class="wkcell L${L.lv}" data-wk="${key(mon)}" title="${esc((w?w+". hafta · ":"")+LV_TR[L.lv]+(L.items.length?": "+L.items.map(x=>x.t).join(", "):""))}"><span class="wn">${w||""}</span><span class="lv"></span></div>`;
+    for(let i=0;i<7;i++){
+      const dt=addD(mon,i), evs=eventsOn(dt,list), other=dt.getMonth()!==first.getMonth(), hol=holidayFrom(dt)===0;
+      const cl=classesOn(dt).filter(c=>!c.cancelled);
+      const cls=["day",other?"other":"",i>=5?"wknd":"",+dt===+today?"today":"",dt<today?"past":"",hol?"hol":""].join(" ");
+      h+=`<div class="${cls}" data-day="${key(dt)}" data-drop="${key(dt)}"><span class="num">${dt.getDate()}</span>
+        ${cl.length?`<span class="ndots" title="${cl.length} ders">${cl.map(c=>`<i class="k k-${c.c}"></i>`).join("")}</span>`:""}
+        ${evs.slice(0,4).map(e=>chip(e,dt)).join("")}${evs.length>4?`<div class="more">+${evs.length-4} daha</div>`:""}</div>`;
+    }
+  }
+  m.innerHTML=h+`</div>`;
+  $("prev").onclick=()=>{anchor=new Date(anchor.getFullYear(),anchor.getMonth()-1,1);renderMain()};
+  $("next").onclick=()=>{anchor=new Date(anchor.getFullYear(),anchor.getMonth()+1,1);renderMain()};
+  $("tday").onclick=()=>{anchor=new Date(today);renderMain()};
+  m.querySelectorAll("[data-day]").forEach(c=>c.onclick=()=>{anchor=pd(c.dataset.day);setView(narrow()?"day":"week")});
+  m.querySelectorAll("[data-wk]").forEach(c=>c.onclick=()=>{anchor=pd(c.dataset.wk);setView("week")});
+  bindChips(m); bindDrops(m);
+}
+
+/* =====================================================================
+   LİSTE
+   ===================================================================== */
+function relTxt(e){const a=diffDays(e.sd,today),b=diffDays(e.ed,today);if(b<0)return"geçti";if(a<=0)return e.end?"devam ediyor":"bugün";if(a===1)return"yarın";return a+" gün sonra"}
+function itemHTML(e,withRel){
+  const a=diffDays(e.sd,today);
+  const badge=e.done?"":a===0?`<span class="badge hot">bugün</span>`:a===1?`<span class="badge hot">yarın</span>`:(a>0&&a<=7)?`<span class="badge warm">${a} gün</span>`:"";
+  const when=e.end?`${fmtD(e.sd)} – ${fmtD(e.ed)}`:DOWL[dowIdx(e.sd)]+(e.s?` ${e.s}${e.e?"–"+e.e:""}`:"")+(e.due?` ${e.due}`:"");
+  const subs=S.sub[e.id]||[], sp=subs.length?` · ${subs.filter(x=>x.d).length}/${subs.length} adım`:"";
+  return `<div class="item k k-${e.c}${withRel&&diffDays(e.ed,today)<0?" past":""}${e.done?" isdone":""}" data-ev="${e.id}">
+    <div class="when"><div class="d">${e.sd.getDate()}</div><div class="m">${MON3[e.sd.getMonth()]}</div></div>
+    <div><div class="t"><span class="dot"></span>${esc(e.t)}${withRel?"":badge}</div>
+    <div class="s">${TYPE_TR[e.type]} · ${when}${sp}${e.n?" · "+esc(e.n):""}</div></div>
+    ${withRel?`<div class="r">${relTxt(e)}</div>`:""}
+    ${canDone(e)?`<button class="chk${e.done?" on":""}" data-done="${e.id}" title="${e.done?"Tamamlanmadı yap":"Tamamlandı işaretle"}">✓</button>`:"<span></span>"}</div>`;
+}
+function renderList(){
+  const m=$("main"), evs=dated().sort((a,b)=>a.sd-b.sd||ORDER[a.type]-ORDER[b.type]);
+  let h=`<div class="mainhead"><h2>Tüm dönem</h2><div class="sub">${evs.length} tarihli · ${undated().length} tarihsiz · ${evs.filter(e=>e.done).length} tamamlandı</div></div><div class="agenda">`,lastM=null;
+  evs.forEach(e=>{const mk=e.sd.getFullYear()*12+e.sd.getMonth();if(mk!==lastM){h+=`<div class="mh">${MONTHS[e.sd.getMonth()]} ${e.sd.getFullYear()}</div>`;lastM=mk}h+=itemHTML(e,true)});
+  m.innerHTML=h+"</div>";
+  bindChips(m);
+}
+
+/* =====================================================================
+   DERSLER: bilgi + devam + not hesaplayıcı
+   ===================================================================== */
+function gradeCalc(c){
+  const items=GRADES[c], g=S.grades[c]||{}, fin=items.find(x=>x.final);
+  let contrib=0,gw=0,remNF=0;
+  items.forEach(x=>{const v=g[x.id];if(typeof v==="number"){contrib+=v*x.w/100;gw+=x.w}else if(!x.final)remNF+=x.w});
+  const avg=gw?contrib/gw*100:null, target=S.target[c]??50;
+  const finDone=!!fin&&typeof g[fin.id]==="number";
+  const need=(fin&&avg!==null&&!finDone)?(target-contrib-remNF*avg/100)/fin.w*100:null;
+  return {contrib,gw,avg,target,need,fin,remNF,finDone};
+}
+function gradeResultHTML(c){
+  const r=gradeCalc(c);
+  if(r.avg===null) return `Notlarını girdikçe ortalaman burada hesaplanır.`;
+  let s=`Şu ana kadarki ortalaman <b>${r.avg.toFixed(1)}</b> (notlanan %${r.gw}'lik kısım) · toplam katkı <b>${r.contrib.toFixed(1)}</b>/100`;
+  if(r.fin&&!r.finDone){
+    s+=`<br>Hedef ortalama <input type="number" min="0" max="100" data-target="${c}" value="${r.target}"> için finalden gereken: `;
+    s+=r.need<=0?`<b>0</b> (hedef şimdiden cepte)`:r.need>100?`<b>${r.need.toFixed(0)}</b> (bu varsayımla ulaşılamıyor)`:`<b>${r.need.toFixed(0)}</b>`;
+    s+=`<span class="fn">${r.remNF?`Notu girilmemiş diğer bileşenlerde (%${r.remNF}) şu anki ortalamanı koruduğun varsayıldı. `:""}ODTÜ'de harf notu bağıl; hedef kendi tahminin.</span>`;
+  }
+  return s;
+}
+function attStats(rule){
+  if(rule.labs){
+    const evs=rule.labs.map(findEv);
+    return {kind:"lab",pips:evs.map(e=>e&&e.done?"ok":""),done:evs.filter(e=>e&&e.done).length,total:evs.length,placed:evs.filter(e=>e&&e.d).length};
+  }
+  const occ=allOccurrences(c=>rule.slots.includes(c.slot.id)&&!c.cancelled);
+  return {kind:"cls",total:occ.length,ok:occ.filter(c=>c.att===true).length,no:occ.filter(c=>c.att===false).length,
+    pastUnmarked:occ.filter(c=>c.date<today&&c.att===undefined).length,pips:occ.map(c=>c.att===true?"ok":c.att===false?"no":"")};
+}
+function attRowHTML(rule){
+  const st=attStats(rule); let msg,cls="";
+  if(st.kind==="lab"){msg=`${st.done}/${st.total} oturum tamamlandı · ${st.placed}/${st.total} tarihi belli`;cls=st.done===st.total?"good":""}
+  else if(rule.maxMiss!=null){
+    const left=rule.maxMiss-st.no;
+    msg=left<0?`⚠ ${st.no} kaçırma: finale girme hakkın tehlikede!`:left===0?`Kaçırma hakkın kalmadı (${st.no} kaçırdın)`:`${st.ok} katıldın · ${st.no} kaçırdın · ${left} hakkın var`;
+    cls=left<0?"bad":left===0?"warn":"good";
+  } else msg=`${st.ok}/${st.total} katıldın · ${st.no} kaçırdın`;
+  if(st.pastUnmarked) msg+=` · ${st.pastUnmarked} geçmiş oturum işaretsiz`;
+  return `<div class="arow k k-${rule.c}"><div class="h"><span>${esc(rule.label)}</span><span>${esc(rule.rule)}</span></div>
+    <div class="pips">${st.pips.map(p=>`<i class="${p}"></i>`).join("")}</div><div class="w ${cls}">${msg}</div></div>`;
+}
+function renderAttendance(){
+  const rows=ATT_RULES.filter(r=>!isHidden(r.c));
+  $("attendance").innerHTML=rows.length?rows.map(attRowHTML).join("")+`<div class="tip" style="padding:8px 0 0">Bir derse tıklayıp "Katıldım / Katılmadım" seç. Lablar "tamamlandı" işaretiyle sayılır.</div>`:`<div class="empty">—</div>`;
+}
+function avgHTML(r){return r.avg!==null?`<div class="n">${r.avg.toFixed(1)}</div><div class="l">şu anki ortalama</div>`:`<div class="l">not girilmedi</div>`}
+function renderCourses(){
+  const m=$("main");
+  let h=`<div class="mainhead"><h2>Dersler</h2><div class="sub">Kişiler, kurallar, devam ve not hesaplayıcı · notların sadece bu tarayıcıda saklanır</div></div><div class="courses">`;
+  MAIN5.filter(c=>!isHidden(c)).forEach(c=>{
+    const I=INFO[c], g=S.grades[c]||{}, atts=ATT_RULES.filter(a=>a.c===c);
+    h+=`<div class="ccard k k-${c}"><div class="chd"><div><b>${c}</b><div class="nm">${COURSES[c].name}</div></div><div class="avg" id="avg-${c}">${avgHTML(gradeCalc(c))}</div></div>
+      <div class="csec"><h5>Kişiler</h5><table class="ppl">${I.people.map(p=>`<tr><td>${esc(p[0])}</td><td>${esc(p[1])}${p[2]?`<br><a href="mailto:${p[2]}">${p[2]}</a>`:""}</td></tr>`).join("")}</table>
+        ${I.book?`<div style="font-size:12.5px;margin-top:6px"><span style="color:var(--muted)">Kaynak:</span> ${esc(I.book)}</div>`:""}
+        <div class="links">${I.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join("")}</div></div>
+      <div class="csec"><h5>Kurallar</h5><ul class="rules">${I.rules.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      ${atts.length?`<div class="csec"><h5>Devam</h5>${atts.map(attRowHTML).join("")}</div>`:""}
+      <div class="csec"><h5>Not hesaplayıcı</h5><table class="gtab">${GRADES[c].map(x=>`<tr class="${x.final?"fin":""}"><td>${esc(x.l)}</td><td class="w">%${x.w}</td>
+        <td class="in"><input type="number" min="0" max="100" step="0.5" placeholder="—" data-g="${c}|${x.id}" value="${g[x.id]??""}" aria-label="${esc(x.l)} notu"></td></tr>`).join("")}</table>
+        <div class="gres" id="gres-${c}">${gradeResultHTML(c)}</div></div></div>`;
+  });
+  m.innerHTML=h+`</div>`;
+  const bindTarget=c=>{const t=m.querySelector(`[data-target="${c}"]`);if(t)t.onchange=()=>{const v=parseFloat(t.value);if(!isNaN(v)){S.target[c]=v;save();refresh(c)}}};
+  const refresh=c=>{$("gres-"+c).innerHTML=gradeResultHTML(c);$("avg-"+c).innerHTML=avgHTML(gradeCalc(c));bindTarget(c)};
+  m.querySelectorAll("[data-g]").forEach(inp=>inp.addEventListener("input",()=>{
+    const [c,id]=inp.dataset.g.split("|"), v=inp.value===""?NaN:parseFloat(inp.value);
+    S.grades[c]=S.grades[c]||{}; if(isNaN(v))delete S.grades[c][id]; else S.grades[c][id]=Math.max(0,Math.min(100,v));
+    save(); refresh(c);
+  }));
+  MAIN5.forEach(c=>{if($("gres-"+c))bindTarget(c)});
+}
+
+/* =====================================================================
+   YAN PANEL
+   ===================================================================== */
+function renderUpcoming(){
+  const up=dated().filter(e=>!e.done&&diffDays(e.ed,today)>=0&&!(e.type==="academic"&&diffDays(e.sd,today)>21))
+    .sort((a,b)=>a.sd-b.sd||ORDER[a.type]-ORDER[b.type]).slice(0,8);
+  const el=$("upcoming");
+  el.innerHTML=up.length?up.map(e=>itemHTML(e,false)).join(""):`<div class="empty">Yaklaşan etkinlik yok.</div>`;
+  bindChips(el);
+}
+function renderUndated(){
+  const list=undated(), el=$("undated");
+  $("undCnt").textContent=list.length;
+  const groups={};list.forEach(e=>(groups[e.c]=groups[e.c]||[]).push(e));
+  let h="";
+  Object.keys(COURSES).forEach(c=>{
+    if(!groups[c])return;
+    h+=`<div class="grp k k-${c}">${COURSES[c].label||c}</div>`;
+    groups[c].forEach(e=>{h+=`<div class="uitem k k-${e.c}" draggable="true" data-drag="${e.id}" data-ev="${e.id}"><span class="grip"></span>
+      <div><div class="t"><span class="dot"></span>${esc(e.t)}</div><div class="s">${esc(e.hint||TYPE_TR[e.type])}</div></div>
+      <button class="btn sm" data-place="${e.id}">Tarih ver</button></div>`});
+  });
+  NOTES.filter(n=>!isHidden(n[0])).forEach(n=>h+=`<div class="tip k k-${n[0]}" style="padding:8px 6px 0"><b style="color:var(--c)">${n[0]}</b> ${esc(n[1])}</div>`);
+  el.innerHTML=h||`<div class="empty">Tarihsiz öğe kalmadı 🎉</div>`;
+  el.setAttribute("data-drop","__undated");
+  el.querySelectorAll("[data-place]").forEach(b=>b.addEventListener("click",ev=>{ev.stopPropagation();openPlace(b.dataset.place)}));
+  bindChips(el); bindDrops(el.parentElement);
+}
+
+/* =====================================================================
+   SÜRÜKLE-BIRAK
+   ===================================================================== */
+let dragId=null,dragOff=0;
+function bindDrag(root){
+  root.querySelectorAll("[data-drag]").forEach(el=>{
+    if(el._dragBound)return; el._dragBound=true;
+    el.addEventListener("dragstart",ev=>{
+      dragId=el.dataset.drag; ev.dataTransfer.setData("text/plain",dragId); ev.dataTransfer.effectAllowed="move";
+      dragOff=el.classList.contains("blk")?ev.clientY-el.getBoundingClientRect().top:0;
+      el.classList.add("dragging");
+      const e=findEv(dragId);
+      const ls=e&&e.lab&&LAB_SLOT[e.lab];
+      if(e&&ls&&!e.win) document.querySelectorAll(".day[data-drop],.wcol[data-drop]").forEach(t=>{const d=pd(t.dataset.drop);if(dowIdx(d)===ls.dow&&d>=pd(SEM_START)&&d<=pd(SEM_END))t.classList.add("hinted")});
+      if(e&&e.win){const a=pd(e.win[0]),b=pd(e.win[1]);
+        document.querySelectorAll("[data-drop]").forEach(t=>{const k=t.dataset.drop;if(k&&k[0]!=="_"&&(t.classList.contains("day")||t.classList.contains("wcol"))){const d=pd(k);if(d>=a&&d<=b)t.classList.add("hinted")}})}
+    });
+    el.addEventListener("dragend",()=>{el.classList.remove("dragging");dragId=null;
+      document.querySelectorAll(".hinted,.droptarget").forEach(t=>t.classList.remove("hinted","droptarget"))});
+  });
+}
+function bindDrops(root){
+  const targets=[...root.querySelectorAll("[data-drop]")];
+  if(root.dataset&&root.dataset.drop)targets.push(root);
+  targets.forEach(t=>{
+    if(t._dropBound)return; t._dropBound=true;
+    t.addEventListener("dragover",ev=>{if(!dragId)return;ev.preventDefault();ev.stopPropagation();t.classList.add("droptarget")});
+    t.addEventListener("dragleave",()=>t.classList.remove("droptarget"));
+    t.addEventListener("drop",ev=>{
+      ev.preventDefault(); ev.stopPropagation(); t.classList.remove("droptarget");
+      const id=dragId||ev.dataTransfer.getData("text/plain"); if(!id)return;
+      const dk=t.dataset.drop;
+      if(dk==="__undated"){unplace(id);return}
+      let tm=null;
+      if(t.classList.contains("wcol")){const r=t.getBoundingClientRect();tm=Math.round((+t.dataset.t0+(ev.clientY-dragOff-r.top)/PXM)/10)*10}
+      placeAt(id,dk,tm);
+    });
+  });
+}
+function placeAt(id,dk,dropMin){
+  const e=findEv(id); if(!e)return;
+  const before=snapshot(), slot=e.lab&&LAB_SLOT[e.lab];
+  let s=e.s||null,en=e.e||null;
+  if(slot&&!e.s){s=slot.s;en=slot.e}
+  else if(dropMin!=null&&e.type!=="deadline"){
+    const dur=(e.s&&e.e)?toMin(e.e)-toMin(e.s):(e.type==="exam"?120:60);
+    s=hhmm(dropMin);en=hhmm(dropMin+dur);
+  }
+  setPlace(e,{d:dk,end:null,s,e:en});
+  const cf=conflictText(conflictsFor(dk,s,en,id));
+  commit(`${e.t} → ${fmtD(pd(dk))}${s?" "+s:""}${cf?" · ⚠ "+cf:""}`,before,!!cf);
+}
+function setPlace(e,patch){
+  if(e.src==="custom"){const c=S.custom.find(x=>x.id===e.id);Object.assign(c,patch);if(!c.end)delete c.end}
+  else{S.place[e.id]=Object.assign({},S.place[e.id]||{},patch);if(!S.place[e.id].end)S.place[e.id].end=null}
+}
+function unplace(id){
+  const e=findEv(id); if(!e||!e.d)return;
+  const before=snapshot(); setPlace(e,{d:null,end:null,s:null,e:null});
+  commit(`${e.t} tarihsizlere taşındı`,before);
+}
+function toggleDone(id){
+  const e=findEv(id); if(!e)return; const before=snapshot();
+  S.done=e.done?S.done.filter(x=>x!==id):[...S.done,id];
+  commit(e.done?`${e.t}: tamamlanmadı`:`${e.t}: tamamlandı ✓`,before);
+}
+
+/* =====================================================================
+   MODALLAR
+   ===================================================================== */
+const dlg=$("dlg"); let onDlgClose=null;
+function openModal(html,bind){onDlgClose=null;dlg.innerHTML=html;bind&&bind(dlg);if(!dlg.open)dlg.showModal()}
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+dlg.addEventListener("close",()=>{if(onDlgClose){const f=onDlgClose;onDlgClose=null;f()}});
+const head=(c,title,sub)=>`<div class="mh2 k k-${c}"><div class="bar"></div><div><h4>${esc(title)}</h4>${sub?`<div class="s">${sub}</div>`:""}</div></div>`;
+
+function openClass(cid){
+  const [sid,k]=cid.split("@"), dt=pd(k), oc=classesRaw(dt).find(x=>x.id===cid); if(!oc)return;
+  const sl=oc.slot, label=sl.k==="Ders"?`${sl.c} ${COURSES[sl.c].name}`:`${sl.c} ${sl.k}`;
+  const canc=oc.cancelled, tracked=ATT_RULES.some(r=>(r.slots||[]).includes(sid));
+  let dirty=false;
+  openModal(head(sl.c,label,`${DOWL[dowIdx(dt)]}, ${dt.getDate()} ${MONTHS[dt.getMonth()]} · ${oc.s}–${oc.e}${sl.room?" · "+sl.room:""}`)+
+    `<div class="mb">${oc.week?`<p><b>${oc.week}. hafta</b>${oc.topic?" · "+esc(oc.topic):""}</p>`:""}
+     ${oc.note?`<div class="note">${esc(oc.note)}</div>`:""}
+     ${canc?`<div class="note">Bu ders iptal olarak işaretlendi.</div>`:""}
+     <h6>Yoklama${tracked?"":" (isteğe bağlı)"}</h6>
+     <div class="attbtns"><button class="btn ok${oc.att===true?" on":""}" data-a="1">✓ Katıldım</button><button class="btn no${oc.att===false?" on":""}" data-a="0">✗ Katılmadım</button>${oc.att!==undefined?`<button class="btn" data-a="x">Temizle</button>`:""}</div>
+     <h6>Notun</h6><textarea id="cNote" placeholder="ör. ödev verildi, slaytlar ODTUClass'ta…">${esc(oc.cnote||"")}</textarea></div>
+     <div class="mf"><button class="btn" id="mCancel">${canc?"İptali geri al":"Bu haftaki dersi iptal et"}</button><span class="sp"></span><button class="btn pri" id="mClose">Kapat</button></div>`,
+    d=>{
+      onDlgClose=()=>{if(dirty){save();renderAll()}};
+      d.querySelector("#cNote").addEventListener("input",ev=>{const v=ev.target.value.trim();if(v)S.cnote[cid]=v;else delete S.cnote[cid];dirty=true});
+      d.querySelector("#mClose").onclick=()=>dlg.close();
+      d.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{
+        const before=snapshot(),a=b.dataset.a;
+        if(a==="x")delete S.att[cid];else S.att[cid]=a==="1";
+        onDlgClose=null; dlg.close(); commit(a==="x"?"Yoklama temizlendi":a==="1"?`${clsLabel(sl)}: katıldın ✓`:`${clsLabel(sl)}: katılmadın`,before);
+      });
+      d.querySelector("#mCancel").onclick=()=>{const before=snapshot();S.cancel=canc?S.cancel.filter(x=>x!==cid):[...S.cancel,cid];onDlgClose=null;dlg.close();commit(canc?"Ders geri alındı":"Ders iptal edildi",before)};
+    });
+}
+
+function subsHTML(id){
+  const subs=S.sub[id]||[];
+  return `<div class="subs">${subs.map((x,i)=>`<label class="${x.d?"dn":""}"><input type="checkbox" data-si="${i}" ${x.d?"checked":""}><span>${esc(x.t)}</span><button class="x" data-sx="${i}" title="Sil">×</button></label>`).join("")||`<span style="color:var(--muted);font-size:12.5px">Henüz adım yok. İş büyükse parçalara böl.</span>`}</div>
+    <div class="subadd"><input id="subIn" placeholder="Adım ekle (ör. taslağı bitir)"><button class="btn sm" id="subAdd">Ekle</button></div>`;
+}
+function bindSubs(d,id){
+  const box=d.querySelector("#subBox");
+  const rerender=()=>{box.innerHTML=subsHTML(id);bindSubs(d,id);renderSideOnly()};
+  box.querySelectorAll("[data-si]").forEach(cb=>cb.onchange=()=>{S.sub[id][+cb.dataset.si].d=cb.checked;save();rerender()});
+  box.querySelectorAll("[data-sx]").forEach(b=>b.onclick=ev=>{ev.preventDefault();S.sub[id].splice(+b.dataset.sx,1);if(!S.sub[id].length)delete S.sub[id];save();rerender()});
+  const add=()=>{const v=box.querySelector("#subIn").value.trim();if(!v)return;(S.sub[id]=S.sub[id]||[]).push({t:v,d:false});save();rerender();box.querySelector("#subIn").focus()};
+  box.querySelector("#subAdd").onclick=add;
+  box.querySelector("#subIn").onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();add()}};
+}
+
+function openEvent(id){
+  const e=findEv(id); if(!e)return;
+  if(!e.d){openPlace(id);return}
+  const when=e.end?`${fmtD(e.sd)} – ${fmtD(e.ed)}`:`${DOWL[dowIdx(e.sd)]}, ${e.sd.getDate()} ${MONTHS[e.sd.getMonth()]} ${e.sd.getFullYear()}`+(e.s?` · ${e.s}${e.e?"–"+e.e:""}`:"")+(e.due?` · ${e.due}`:"");
+  const days=diffDays(e.sd,today), editable=canDone(e), b0=BASE.find(b=>b.id===id), origDated=!!(b0&&b0.d);
+  const cf=e.s?conflictText(conflictsFor(e.d,e.s,e.e,id)):"";
+  openModal(head(e.c,e.t,`${TYPE_TR[e.type]} · ${when}`)+
+    `<div class="mb">${e.done?`<p style="color:var(--ok);font-weight:650">✓ Tamamlandı</p>`:days>0?`<p>${days} gün kaldı</p>`:days===0?"<p><b>Bugün</b></p>":""}
+      ${e.n?`<div class="note">${esc(e.n)}</div>`:""}
+      ${cf?`<div class="warn">⚠ ${esc(cf)}</div>`:""}
+      ${e.hint?`<p style="color:var(--muted);font-size:12.5px">Syllabus: ${esc(e.hint)}</p>`:""}
+      ${e.user&&origDated?`<p style="color:var(--muted);font-size:12.5px">Tarihini sen değiştirdin.</p>`:""}
+      ${editable?`<h6>Adımlar</h6><div id="subBox">${subsHTML(id)}</div>`:""}</div>
+     <div class="mf">
+      ${editable?`<button class="btn${e.done?"":" pri"}" id="mDone">${e.done?"Tamamlanmadı yap":"✓ Tamamlandı"}</button>`:""}
+      ${editable&&e.user&&origDated?`<button class="btn" id="mReset">Orijinal tarih</button>`:""}
+      ${editable&&!origDated?`<button class="btn" id="mUn">Tarihsiz yap</button>`:""}
+      <span class="sp"></span>${editable?`<button class="btn" id="mEdit">Düzenle</button>`:""}<button class="btn${editable?"":" pri"}" id="mClose">Kapat</button></div>`,
+    d=>{
+      const q=s=>d.querySelector(s);
+      q("#mClose").onclick=()=>dlg.close();
+      if(q("#mEdit"))q("#mEdit").onclick=()=>openPlace(id);
+      if(q("#mUn"))q("#mUn").onclick=()=>{onDlgClose=null;dlg.close();unplace(id)};
+      if(q("#mDone"))q("#mDone").onclick=()=>{onDlgClose=null;dlg.close();toggleDone(id)};
+      if(q("#mReset"))q("#mReset").onclick=()=>{const before=snapshot();delete S.place[id];onDlgClose=null;dlg.close();commit("Orijinal tarih geri yüklendi",before)};
+      if(q("#subBox"))bindSubs(d,id);
+      onDlgClose=()=>renderAll();
+    });
+}
+
+const courseOpts=sel=>Object.entries(COURSES).filter(([k])=>k!=="ODTU").map(([k,v])=>`<option value="${k}"${k===sel?" selected":""}>${v.label||k} · ${v.name}</option>`).join("");
+const typeOpts=sel=>["exam","quiz","deadline","lab","event"].map(t=>`<option value="${t}"${t===sel?" selected":""}>${TYPE_TR[t]}</option>`).join("");
+function openPlace(id){
+  const isNew=!id, e=isNew?{c:"OZEL",type:"event",t:"",d:key(anchor)}:findEv(id);
+  let defS=e.s||"",defE=e.e||"";
+  if(!e.d&&e.lab&&LAB_SLOT[e.lab]){defS=LAB_SLOT[e.lab].s;defE=LAB_SLOT[e.lab].e}
+  const isCustom=isNew||e.src==="custom", b0=!isNew&&BASE.find(b=>b.id===e.id);
+  const dval=e.d||(e.win?e.win[0]:"");
+  openModal(head(e.c,isNew?"Yeni etkinlik":e.t,isNew?"Takvime kendi etkinliğini ekle":(e.hint?"Syllabus: "+esc(e.hint):TYPE_TR[e.type]))+
+    `<div class="mb">
+      ${e.lab&&LAB_SLOT[e.lab]?`<div class="note">Lab saatin programına göre <b>${LAB_SLOT[e.lab].lbl}</b>. Saat otomatik dolduruldu, gerekirse değiştir.</div>`:""}
+      <div class="form">
+        ${isCustom?`<label class="full">Başlık<input id="fT" value="${esc(e.t)}" placeholder="ör. EE402 ödev teslimi"></label>
+          <label>Ders<select id="fC">${courseOpts(e.c)}</select></label><label>Tür<select id="fY">${typeOpts(e.type)}</select></label>`:""}
+        <label class="full">Tarih<input type="date" id="fD" value="${dval}" ${e.win?`min="${e.win[0]}" max="${e.win[1]}"`:""}></label>
+        <label>Başlangıç (ops.)<input type="time" id="fS" value="${defS}"></label>
+        <label>Bitiş (ops.)<input type="time" id="fE" value="${defE}"></label>
+        <label class="full">Not (ops.)<textarea id="fN">${esc(isCustom||(S.place[e.id]&&S.place[e.id].n!==undefined)?(e.n||""):"")}</textarea></label>
+      </div>
+      <div id="fW"></div>
+      ${e.win?`<p style="font-size:12px;color:var(--muted);margin:0">Tarih seçici syllabus'taki aralıkla sınırlı (${fmtD(pd(e.win[0]))} – ${fmtD(pd(e.win[1]))}).</p>`:""}
+    </div>
+    <div class="mf">${isCustom&&!isNew?`<button class="btn danger" id="mDel">Sil</button>`:""}
+      ${!isNew&&e.d&&!(b0&&b0.d)?`<button class="btn" id="mUn">Tarihsiz yap</button>`:""}
+      <span class="sp"></span><button class="btn" id="mX">Vazgeç</button><button class="btn pri" id="mOk">Kaydet</button></div>`,
+    d=>{
+      const q=s=>d.querySelector(s);
+      const check=()=>{const t=conflictText(conflictsFor(q("#fD").value,q("#fS").value||null,q("#fE").value||null,e.id));q("#fW").innerHTML=t?`<div class="warn">⚠ ${esc(t)}</div>`:""};
+      ["#fD","#fS","#fE"].forEach(s=>q(s).addEventListener("input",check)); check();
+      q("#mX").onclick=()=>dlg.close();
+      if(q("#mDel"))q("#mDel").onclick=()=>{const before=snapshot();S.custom=S.custom.filter(x=>x.id!==e.id);dlg.close();commit("Etkinlik silindi",before)};
+      if(q("#mUn"))q("#mUn").onclick=()=>{dlg.close();unplace(e.id)};
+      q("#mOk").onclick=()=>{
+        const dv=q("#fD").value||null, sv=q("#fS").value||null, ev=q("#fE").value||null, nv=q("#fN").value.trim();
+        const before=snapshot();
+        if(isNew){
+          const t=q("#fT").value.trim(); if(!t){q("#fT").focus();return}
+          S.custom.push({id:"u"+Date.now().toString(36),c:q("#fC").value,type:q("#fY").value,t,d:dv,s:dv?sv:null,e:dv?ev:null,n:nv||undefined});
+        }else{
+          const patch={d:dv,end:null,s:dv?sv:null,e:dv?ev:null};
+          if(nv||e.n)patch.n=nv||(isCustom?undefined:b0&&b0.n);
+          if(isCustom){patch.t=q("#fT").value.trim()||e.t;patch.c=q("#fC").value;patch.type=q("#fY").value}
+          setPlace(e,patch);
+        }
+        const cf=dv?conflictText(conflictsFor(dv,sv,ev,isNew?null:e.id)):"";
+        dlg.close(); commit((isNew?"Etkinlik eklendi":(dv?"Kaydedildi":"Tarihsizlere taşındı"))+(cf?" · ⚠ "+cf:""),before,!!cf);
+      };
+      setTimeout(()=>(q("#fT")||q("#fD")).focus(),30);
+    });
+}
+
+/* =====================================================================
+   TOAST / YEDEK / ICS
+   ===================================================================== */
+let toastTimer=null;
+function toast(msg,before,long){
+  $("toastMsg").textContent=msg; undoStack=before||null;
+  $("toastUndo").style.display=before?"":"none";
+  $("toast").classList.add("show"); clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>$("toast").classList.remove("show"),long?9000:5000);
+}
+$("toastUndo").onclick=()=>{if(undoStack){S=Object.assign(blank(),JSON.parse(undoStack));undoStack=null;save();renderAll();$("toast").classList.remove("show")}};
+function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+$("bkOut").onclick=()=>download(`takvim_yedek_${key(today)}.json`,JSON.stringify(S,null,1),"application/json");
+$("bkIn").onclick=()=>$("bkFile").click();
+$("bkFile").onchange=ev=>{const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const before=snapshot();S=Object.assign(blank(),JSON.parse(r.result));commit("Yedek yüklendi",before)}catch(_){toast("Dosya okunamadı")}};r.readAsText(f);ev.target.value=""};
+$("reset").onclick=()=>{
+  openModal(head("ODTU","Değişiklikleri sıfırla","Tarih verdiğin öğeler, eklediğin etkinlikler, iptaller, yoklamalar, notların ve not hesaplayıcıdaki notlar silinir.")+
+    `<div class="mf"><span class="sp"></span><button class="btn" id="mX">Vazgeç</button><button class="btn danger" id="mOk">Sıfırla</button></div>`,
+    d=>{d.querySelector("#mX").onclick=()=>dlg.close();d.querySelector("#mOk").onclick=()=>{const before=snapshot();const v=S.view;S=blank();S.view=v;dlg.close();commit("Sıfırlandı",before)}});
+};
+function openICS(){
+  openModal(head("ODTU","Takvime aktar",".ics dosyası indirilir; telefonda ya da Google Takvim'de açınca etkinlikler eklenir.")+
+    `<div class="mb">
+      <label class="opt"><input type="checkbox" id="oA" checked><span>Hatırlatmalar ekle<small>Sınav/quiz: 3 gün ve 1 gün önce 09:00 · Teslim/lab günü belli olanlar: 1 gün önce ve aynı gün 09:00 · Saatli etkinlik: 1 gün ve 1 saat önce</small></span></label>
+      <label class="opt"><input type="checkbox" id="oC" checked><span>Ders saatlerini ekle<small>İptal ettiğin dersler hariç, hatırlatmasız</small></span></label>
+      <label class="opt"><input type="checkbox" id="oD" checked><span>Tamamlananları dışarıda bırak</span></label>
+      <div class="note">Görünür derslere göre aktarılır (filtrelerde kapattığın dersler dahil edilmez).</div></div>
+     <div class="mf"><span class="sp"></span><button class="btn" id="mX">Vazgeç</button><button class="btn pri" id="mOk">İndir</button></div>`,
+    d=>{d.querySelector("#mX").onclick=()=>dlg.close();d.querySelector("#mOk").onclick=()=>{downloadICS({alarms:d.querySelector("#oA").checked,classes:d.querySelector("#oC").checked,skipDone:d.querySelector("#oD").checked});dlg.close();toast(".ics indirildi")}});
+}
+function buildICS(o){
+  const f=d=>key(d).replace(/-/g,"");
+  const stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+  const E=s=>String(s).replace(/\\/g,"\\\\").replace(/[,;]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+  const alarm=(trig,txt)=>`BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:${E(txt)}\r\nTRIGGER:${trig}\r\nEND:VALARM\r\n`;
+  let s="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//2026 Guz Takvimi//TR\r\nCALSCALE:GREGORIAN\r\nX-WR-CALNAME:2026 Güz Takvimi\r\nX-WR-TIMEZONE:Europe/Istanbul\r\n";
+  const ev=(uid,ds,de,sum,desc,loc,al)=>{s+=`BEGIN:VEVENT\r\nUID:${uid}@guz2026\r\nDTSTAMP:${stamp}\r\n${ds}\r\n${de}\r\nSUMMARY:${E(sum)}\r\n`+(desc?`DESCRIPTION:${E(desc)}\r\n`:"")+(loc?`LOCATION:${E(loc)}\r\n`:"")+(al||"")+`END:VEVENT\r\n`};
+  dated().filter(e=>!(o.skipDone&&e.done)).forEach(e=>{
+    let al="";
+    if(o.alarms&&canDone(e)){
+      if(e.s) al=alarm("-P1D",e.t+" yarın")+alarm("-PT1H",e.t+" 1 saat sonra");
+      else if(e.type==="exam"||e.type==="quiz") al=alarm("-P2DT15H",e.t+" 3 gün sonra")+alarm("-PT15H",e.t+" yarın");
+      else al=alarm("-PT15H",e.t+" yarın")+alarm("PT9H",e.t+" bugün");
+    }
+    if(e.s) ev(e.id,`DTSTART:${f(e.sd)}T${e.s.replace(":","")}00`,`DTEND:${f(e.sd)}T${(e.e||hhmm(toMin(e.s)+60)).replace(":","")}00`,e.t,e.n,"",al);
+    else ev(e.id,`DTSTART;VALUE=DATE:${f(e.sd)}`,`DTEND;VALUE=DATE:${f(addD(e.ed,1))}`,e.t+(e.due?" ("+e.due+")":""),e.n,"",al);
+  });
+  if(o.classes) for(let d=pd(SEM_START);d<=pd(SEM_END);d=addD(d,1)) classesRaw(d).filter(c=>!c.cancelled&&!isHidden(c.c)).forEach(c=>{
+    ev(c.id.replace("@","-"),`DTSTART:${f(d)}T${c.s.replace(":","")}00`,`DTEND:${f(d)}T${c.e.replace(":","")}00`,clsLabel(c.slot),[c.topic,c.note,c.cnote].filter(Boolean).join(" · "),c.slot.room);
+  });
+  return s+"END:VCALENDAR\r\n";
+}
+function downloadICS(o){download("2026_Guz_Takvimi.ics",buildICS(o),"text/calendar;charset=utf-8")}
+$("ics").onclick=openICS;
+$("addBtn").onclick=()=>openPlace(null);
+$("printBtn").onclick=()=>window.print();
+$("syncBtn").onclick=openSync;
+
+/* =====================================================================
+   SENKRON: şifreli (AES-GCM) durum, GitHub reposunun "data" dalında
+   ===================================================================== */
+const SYNC_FIELDS=["place","custom","cancel","att","done","sub","cnote","grades","target"];
+const CKEY="guz2026.sync";
+let SC=(()=>{try{return JSON.parse(localStorage.getItem(CKEY))||null}catch(_){return null}})();
+const SY={status:SC?"idle":"off",msg:"",last:null,timer:null,busy:false,pending:false,sha:null,lastPull:0};
+const b64e=u8=>{let s="";for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s)};
+const b64d=str=>Uint8Array.from(atob(str),c=>c.charCodeAt(0));
+async function deriveKey(pass,salt){const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pass),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:200000,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"])}
+async function seal(obj,pass){const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));const key=await deriveKey(pass,salt);
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv},key,new TextEncoder().encode(JSON.stringify(obj))));return{v:1,ts:obj._ts||0,salt:b64e(salt),iv:b64e(iv),ct:b64e(ct)}}
+async function unseal(env,pass){const key=await deriveKey(pass,b64d(env.salt));const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(env.iv)},key,b64d(env.ct));return JSON.parse(new TextDecoder().decode(pt))}
+const pickSync=o=>{const r={_ts:o._ts||0};SYNC_FIELDS.forEach(k=>r[k]=o[k]);return r};
+const hasData=o=>SYNC_FIELDS.some(k=>{const v=o[k];return Array.isArray(v)?v.length:v&&Object.keys(v).length});
+function errMsg(e){if(e&&e.name==="OperationError")return "Şifre yanlış: bu cihazdaki şifre buluttaki kayıtla eşleşmiyor";if(e&&e.name==="TypeError")return "GitHub'a ulaşılamadı (internet bağlantısı?)";return (e&&e.message)||String(e)}
+async function gh(cfg,path,opt={}){
+  const r=await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}${path}`,{method:opt.method||"GET",cache:"no-store",
+    headers:{Authorization:`Bearer ${cfg.token}`,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:opt.body?JSON.stringify(opt.body):undefined});
+  let j=null;try{j=await r.json()}catch(_){}
+  return{status:r.status,ok:r.ok,j};
+}
+async function ensureBranch(cfg){
+  const r=await gh(cfg,`/git/ref/heads/${cfg.branch}`); if(r.ok)return;
+  if(r.status===401)throw new Error("Token geçersiz ya da süresi dolmuş");
+  const repo=await gh(cfg,""); if(!repo.ok)throw new Error(repo.status===404?"Repo bulunamadı ya da token bu repoya erişemiyor":"GitHub hatası "+repo.status);
+  const base=await gh(cfg,`/git/ref/heads/${repo.j.default_branch}`); if(!base.ok)throw new Error("Ana dal okunamadı");
+  const c=await gh(cfg,"/git/refs",{method:"POST",body:{ref:`refs/heads/${cfg.branch}`,sha:base.j.object.sha}});
+  if(!c.ok&&c.status!==422)throw new Error(`Veri dalı oluşturulamadı (${c.status}). Token'da Contents: Read and write izni var mı?`);
+}
+async function remoteGet(cfg){
+  const r=await gh(cfg,`/contents/${cfg.path}?ref=${cfg.branch}`);
+  if(r.status===404)return null;
+  if(r.status===401)throw new Error("Token geçersiz ya da süresi dolmuş");
+  if(!r.ok)throw new Error("Okuma hatası "+r.status);
+  return{env:JSON.parse(atob(r.j.content.replace(/\n/g,""))),sha:r.j.sha};
+}
+const remotePut=(cfg,env,sha)=>gh(cfg,`/contents/${cfg.path}`,{method:"PUT",body:{message:`sync ${new Date().toISOString()}`,content:btoa(JSON.stringify(env)),branch:cfg.branch,...(sha?{sha}:{})}});
+const BKEY="guz2026.sync.base";
+SY.base=(()=>{try{return JSON.parse(localStorage.getItem(BKEY))||null}catch(_){return null}})();
+const baseTs=()=>(SY.base&&SY.base._ts)||0;
+function setBase(d){SY.base=JSON.parse(JSON.stringify(pickSync(d)));try{localStorage.setItem(BKEY,JSON.stringify(SY.base))}catch(_){}}
+function applyRemote(data){SYNC_FIELDS.forEach(k=>S[k]=data[k]??blank()[k]);S._ts=data._ts||0;setBase(data);persist();renderAll()}
+/* üç yönlü birleştirme: son eşitlenen hal (base), bu cihaz (L), bulut (R) */
+const J=v=>JSON.stringify(v===undefined?null:v);
+function objMerge(B,L,R){const o={};new Set([...Object.keys(B),...Object.keys(L),...Object.keys(R)]).forEach(k=>{
+  const pick=J(L[k])!==J(B[k])?L:R; if(k in pick&&pick[k]!==undefined)o[k]=pick[k];});return o}
+function setMerge(B,L,R){const rm=B.filter(x=>!L.includes(x)),add=L.filter(x=>!B.includes(x));return [...new Set([...R.filter(x=>!rm.includes(x)),...add])]}
+const byId=a=>Object.fromEntries((a||[]).map(x=>[x.id,x]));
+function merge3(B,L,R){const o={};SYNC_FIELDS.forEach(f=>{
+  if(f==="cancel"||f==="done")o[f]=setMerge(B[f]||[],L[f]||[],R[f]||[]);
+  else if(f==="custom")o[f]=Object.values(objMerge(byId(B[f]),byId(L[f]),byId(R[f])));
+  else o[f]=objMerge(B[f]||{},L[f]||{},R[f]||{});});return o}
+function applyMerged(m){SYNC_FIELDS.forEach(k=>S[k]=m[k]);S._ts=Date.now();persist();renderAll()}
+function setSync(st,msg){SY.status=st;SY.msg=msg||"";if(st==="ok")SY.last=new Date();renderSyncBadge()}
+function renderSyncBadge(){
+  const b=$("syncBtn"),n=$("saveNote"); if(!b)return;
+  const t=SY.last?`${String(SY.last.getHours()).padStart(2,"0")}:${String(SY.last.getMinutes()).padStart(2,"0")}`:"";
+  const m={off:["☁ Senkron kur","Değişikliklerin bu tarayıcıda kaydedilir; cihazlar arası senkron kapalı."],idle:["☁ Senkron","Senkron açık."],busy:["☁ Eşitleniyor…","Eşitleniyor…"],
+    ok:["☁ Eşitlendi","Senkron açık · son eşitleme "+t],err:["⚠ Senkron hatası","Senkron hatası: "+SY.msg]}[SY.status];
+  b.textContent=m[0]; b.classList.toggle("syncerr",SY.status==="err"); b.classList.toggle("syncok",SY.status==="ok"); b.title=m[1]; n.textContent=m[1];
+}
+function schedulePush(){if(!SC)return;clearTimeout(SY.timer);SY.timer=setTimeout(syncPush,2500)}
+async function syncPush(){
+  if(!SC)return; if(SY.busy){SY.pending=true;return}
+  SY.busy=true;setSync("busy");
+  try{
+    let snap=pickSync(S), env=await seal(snap,SC.pass);
+    let r=await remotePut(SC,env,SY.sha);
+    if(r.status===409||r.status===422){
+      const cur=await remoteGet(SC);
+      if(cur&&(cur.env.ts||0)!==baseTs()){applyMerged(merge3(SY.base||{},pickSync(S),await unseal(cur.env,SC.pass)));snap=pickSync(S);env=await seal(snap,SC.pass)}
+      r=await remotePut(SC,env,cur?cur.sha:undefined);
+    }
+    if(r.status===404){await ensureBranch(SC);r=await remotePut(SC,env,undefined)}
+    if(!r.ok)throw new Error(r.status===401?"Token geçersiz ya da süresi dolmuş":r.status===403?"Token'ın bu repoya yazma izni yok":"Yazma hatası "+r.status);
+    SY.sha=r.j.content.sha; setBase(snap); setSync("ok");
+  }catch(e){setSync("err",errMsg(e))}
+  SY.busy=false;
+  if(SY.pending){SY.pending=false;syncPush()}
+}
+async function syncPull(force){
+  if(!SC||SY.busy)return; if(!force&&Date.now()-SY.lastPull<20000)return;
+  SY.busy=true;setSync("busy");
+  try{
+    const r=await remoteGet(SC); SY.lastPull=Date.now();
+    if(r)SY.sha=r.sha;
+    const localDirty=(S._ts||0)>baseTs(), remoteChanged=r&&(r.env.ts||0)!==baseTs();
+    if(remoteChanged){
+      const rd=await unseal(r.env,SC.pass);
+      if(localDirty){applyMerged(merge3(SY.base||{},pickSync(S),rd));SY.busy=false;return syncPush()}
+      applyRemote(rd); setSync("ok");
+    } else if(!r||localDirty){SY.busy=false;return syncPush()}
+    else setSync("ok");
+  }catch(e){setSync("err",errMsg(e))}
+  SY.busy=false;
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")syncPull()});
+setInterval(()=>{if(document.visibilityState==="visible")syncPull()},120000);
+
+function openSync(){
+  if(SC){
+    openModal(head("ODTU","Senkron",`${esc(SC.owner)}/${esc(SC.repo)} · <code>${esc(SC.branch)}</code> dalı · şifreli`)+
+      `<div class="mb"><p>${SY.status==="err"?`<span style="color:var(--bad)">⚠ ${esc(SY.msg)}</span>`:SY.last?`Son eşitleme: ${SY.last.toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"})}`:"Henüz eşitlenmedi."}</p>
+       <div class="note">Değişiklikler birkaç saniye içinde buluta yazılır; sayfayı başka cihazda açınca ya da sekmeye geri dönünce güncel hali çekilir. Notların ve yoklamaların şifreli saklanır.</div></div>
+       <div class="mf"><button class="btn danger" id="sOff">Bu cihazda kapat</button><span class="sp"></span><button class="btn" id="mX">Kapat</button><button class="btn pri" id="sNow">Şimdi eşitle</button></div>`,
+      d=>{d.querySelector("#mX").onclick=()=>dlg.close();
+        d.querySelector("#sNow").onclick=async()=>{dlg.close();await syncPull(true)};
+        d.querySelector("#sOff").onclick=()=>{try{localStorage.removeItem(CKEY);localStorage.removeItem(BKEY)}catch(_){}SC=null;SY.base=null;setSync("off");dlg.close();toast("Bu cihazda senkron kapatıldı; veriler cihazda duruyor")}});
+    return;
+  }
+  openModal(head("ODTU","Cihazlar arası senkron","Değişikliklerin şifrelenip my_calendar reposunun data dalında saklanır")+
+    `<div class="mb">
+      <div class="note"><b>Bir kerelik hazırlık (sadece ilk cihazda):</b> <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → yeni fine-grained token</a> sayfasında
+      <br>• Repository access: <b>Only select repositories → my_calendar</b>
+      <br>• Permissions → Repository permissions → <b>Contents: Read and write</b>
+      <br>• Expiration: dönem sonrası bir tarih (ör. 28 Şubat 2027)
+      <br>Oluşan token'ı aşağıya yapıştır. Aynı token'ı ve şifreyi diğer cihazlarında da kullan.</div>
+      <div class="form">
+        <label>GitHub kullanıcı adı<input id="sO" value="${esc((SC&&SC.owner)||"oguzkaandogru")}" autocomplete="off"></label>
+        <label>Repo<input id="sR" value="my_calendar" autocomplete="off"></label>
+        <label class="full">Token<input id="sT" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+        <label class="full">Şifre (verilerini şifreler; her cihazda aynı olmalı)<input id="sP" type="password" autocomplete="new-password" placeholder="en az 6 karakter"></label>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin:0">Token ve şifre sadece bu cihazın tarayıcısında saklanır. Şifreyi unutursan buluttaki kayıt açılamaz (cihazdaki kayıt durur).</p>
+      <div id="sMsg"></div></div>
+     <div class="mf"><span class="sp"></span><button class="btn" id="mX">Vazgeç</button><button class="btn pri" id="sGo">Bağlan</button></div>`,
+    d=>{
+      const q=s=>d.querySelector(s);
+      q("#mX").onclick=()=>dlg.close();
+      q("#sGo").onclick=async()=>{
+        const cfg={owner:q("#sO").value.trim(),repo:q("#sR").value.trim(),branch:"data",path:"takvim.enc.json",token:q("#sT").value.trim(),pass:q("#sP").value};
+        const say=(t,bad)=>q("#sMsg").innerHTML=`<div class="${bad?"warn":"note"}">${t}</div>`;
+        if(!cfg.token||cfg.pass.length<6){say("Token'ı ve en az 6 karakterlik şifreyi gir.",1);return}
+        q("#sGo").disabled=true; say("Bağlanılıyor…");
+        try{
+          await ensureBranch(cfg);
+          const r=await remoteGet(cfg);
+          let remote=null; if(r){remote=await unseal(r.env,cfg.pass);SY.sha=r.sha}
+          const finish=(useRemote)=>{
+            SC=cfg; try{localStorage.setItem(CKEY,JSON.stringify(cfg))}catch(_){}
+            dlg.close();
+            if(useRemote){applyRemote(remote);setSync("ok");toast("Senkron açıldı · buluttaki kayıt yüklendi")}
+            else if(remote&&hasData(remote)&&false){}
+            else{if(!S._ts)S._ts=Date.now();persist();syncPush();toast("Senkron açıldı · bu cihazdaki kayıt buluta yüklendi")}
+          };
+          if(remote&&hasData(S)&&hasData(remote)){
+            q("#sMsg").innerHTML=`<div class="warn">Bulutta zaten bir kayıt var (${new Date(r.env.ts).toLocaleString("tr-TR")}). Bu cihazda da kayıt var. Hangisi kalsın?</div>
+              <div class="attbtns"><button class="btn pri" id="sUseR">Buluttakini al</button><button class="btn" id="sUseL">Bu cihazdakini yükle</button></div>`;
+            q("#sUseR").onclick=()=>finish(true); q("#sUseL").onclick=()=>finish(false);
+          } else finish(!!remote&&hasData(remote));
+        }catch(e){say("⚠ "+esc(errMsg(e)),1);q("#sGo").disabled=false}
+      };
+    });
+}
+
+/* =====================================================================
+   ÇİZİM
+   ===================================================================== */
+function setView(v){S.view=v;persist();document.querySelectorAll("#views button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));renderMain()}
+function renderMain(){({day:renderDay,month:renderMonth,list:renderList,courses:renderCourses}[S.view]||renderWeek)()}
+function renderSideOnly(){renderUpcoming();renderAttendance()}
+function renderAll(){renderStrip();renderFilters();renderMain();renderUpcoming();renderUndated();renderAttendance()}
+document.querySelectorAll("#views button").forEach(b=>b.onclick=()=>setView(b.dataset.v));
+document.addEventListener("keydown",e=>{
+  if(dlg.open||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
+    const dir=e.key==="ArrowLeft"?-1:1, step={day:1,week:7}[S.view];
+    if(S.view==="month")anchor=new Date(anchor.getFullYear(),anchor.getMonth()+dir,1);else if(step)anchor=addD(anchor,dir*step);else return;
+    renderMain();
+  }
+  if(e.key==="t"||e.key==="T"){anchor=new Date(today);renderMain()}
+});
+setInterval(()=>{if(!dlg.open){renderStrip();if(S.view==="week"||S.view==="day")renderMain()}},60000);
+setView(narrow()&&S.view==="week"?"day":(S.view||"week")); renderAll(); renderSyncBadge(); if(SC)syncPull(true);
+</script>
+</body>
+</html>

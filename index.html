@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026 Güz Takvimi</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22#d9480f%22/%3E%3Crect x=%229%22 y=%2212%22 width=%2246%22 height=%2244%22 rx=%227%22 fill=%22#fffaf4%22/%3E%3Cpath d=%22M9 19a7 7 0 0 1 7-7h32a7 7 0 0 1 7 7v5H9z%22 fill=%22#1c1b19%22/%3E%3Crect x=%2215%22 y=%2229%22 width=%2215%22 height=%2210%22 rx=%223%22 fill=%22#2563eb%22/%3E%3Crect x=%2234%22 y=%2229%22 width=%2215%22 height=%2210%22 rx=%223%22 fill=%22#0e8a5f%22/%3E%3Crect x=%2215%22 y=%2242%22 width=%2215%22 height=%229%22 rx=%223%22 fill=%22#7c3aed%22/%3E%3Crect x=%2234%22 y=%2242%22 width=%2215%22 height=%229%22 rx=%223%22 fill=%22#d6336c%22/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141413" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Takvim">
+<meta name="description" content="2026 Güz dönemi ders programı, sınavlar, teslimler ve devam takibi">
 <style>
 :root{
   --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b19; --muted:#6b6862; --line:#e4e1da; --soft:#efede8; --soft2:#f8f7f4;
@@ -1397,6 +1406,7 @@ document.addEventListener("keydown",e=>{
 });
 setInterval(()=>{if(!dlg.open){renderStrip();if(S.view==="week"||S.view==="day")renderMain()}},60000);
 setView(narrow()&&S.view==="week"?"day":(S.view||"week")); renderAll(); renderSyncBadge(); if(SC)syncPull(true);
+if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- surum: 2026-10-10 · EE407 donem takvimi -->
+<!-- surum: 2026-10-11 · EE407 Grup 1 -->
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -429,7 +429,7 @@ const SLOTS=[
   {id:"ee303a",c:"EE303",k:"Ders",dow:2,s:"15:40",e:"17:30",room:"EA312",topics:EE303_TOPICS,notes:{"2026-09-30":"1. hafta: discussion yok, dersler bölümlerde 3 saat.","2026-12-30":"14. hafta: discussion yok, dersler bölümlerde 3 saat. Lab demosu bu hafta."}},
   {id:"ee361b",c:"EE361",k:"Ders",dow:3,s:"11:40",e:"12:30",room:"EA310"}
 ];
-const LAB_SLOT={EE361:{s:"13:40",e:"17:30",dow:1,lbl:"Salı 13:40–17:30"},EE407:{s:"08:40",e:"11:30",dow:3,lbl:"Perşembe 08:40–11:30"}};
+const LAB_SLOT={EE361:{s:"13:40",e:"17:30",dow:1,lbl:"Salı 13:40–17:30"},EE407:{s:"08:40",e:"12:30",dow:3,lbl:"Perşembe 08:40–12:30"}};
 
 /* type: exam | quiz | deadline | lab | event | academic | holiday
    d: tarih (null = tarihi belli değil) · end: aralık bitişi · s/e: saat · due: teslim saati
@@ -482,12 +482,12 @@ const BASE=[
   {id:"407-grp",c:"EE407",type:"deadline",t:"EE407 Lab grup seçimi son gün",d:"2026-10-09",w:0.5},
   {id:"407-mt",c:"EE407",type:"exam",t:"EE407 Midterm",d:"2026-11-14",n:"%25 · Cumartesi. Dersin kendi takvimine göre; bölümün sınav takviminde 9 Aralık yazıyordu, hocadan teyit et."},
   {id:"407-projsel",c:"EE407",type:"deadline",t:"EE407 Dönem projesi seçimi",d:"2026-11-02",w:1},
-  {id:"407-lab1",c:"EE407",type:"lab",t:"EE407 Exp 1-6-7 · 1/3",d:"2026-10-15",s:"08:40",e:"11:30",lab:"EE407",n:"Aynı oturumda 3 grup 3 farklı deney yapar; senin deneyin grubuna göre. Rotasyon (Grup→Deney): G1 Exp7·Exp1·Exp6 | G2 Exp6·Exp7·Exp1 | G3 Exp1·Exp6·Exp7"},
-  {id:"407-lab2",c:"EE407",type:"lab",t:"EE407 Exp 1-6-7 · 2/3",d:"2026-10-22",s:"08:40",e:"11:30",lab:"EE407",n:"Rotasyon (Grup→Deney): G1 Exp7·Exp1·Exp6 | G2 Exp6·Exp7·Exp1 | G3 Exp1·Exp6·Exp7"},
-  {id:"407-lab3",c:"EE407",type:"lab",t:"EE407 Exp 1-6-7 · 3/3",d:"2026-11-05",s:"08:40",e:"11:30",lab:"EE407",n:"29 Ekim tatili nedeniyle Perşembe grubunun bu oturumu 6. haftaya (5 Kasım) kaydırıldı. Rotasyon (Grup→Deney): G1 Exp7·Exp1·Exp6 | G2 Exp6·Exp7·Exp1 | G3 Exp1·Exp6·Exp7"},
-  {id:"407-lab4",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 1/3",d:"2026-11-19",s:"08:40",e:"11:30",lab:"EE407",n:"Aynı oturumda 3 grup 3 farklı deney yapar (Exp 3, 4, 5); rotasyon tablosu henüz paylaşılmadı."},
-  {id:"407-lab5",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 2/3",d:"2026-11-26",s:"08:40",e:"11:30",lab:"EE407",n:"Exp 3, 4, 5 rotasyonu"},
-  {id:"407-lab6",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 3/3",d:"2026-12-03",s:"08:40",e:"11:30",lab:"EE407",n:"Exp 3, 4, 5 rotasyonu"},
+  {id:"407-lab1",c:"EE407",type:"lab",t:"EE407 Lab · Exp 7",d:"2026-10-15",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 7: Coupled Water Tank lineerleştirme ve kontrol. Aynı oturumda Grup 2 Exp 6, Grup 3 Exp 1 yapıyor. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
+  {id:"407-lab2",c:"EE407",type:"lab",t:"EE407 Lab · Exp 1",d:"2026-10-22",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 1: Heating Process & Thermocouple. Aynı oturumda Grup 2 Exp 7, Grup 3 Exp 6 yapıyor. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
+  {id:"407-lab3",c:"EE407",type:"lab",t:"EE407 Lab · Exp 6",d:"2026-11-05",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 6: Float in a Tube sistem tanıma. 29 Ekim tatili nedeniyle Perşembe oturumu 6. haftaya (5 Kasım) kaydırıldı. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
+  {id:"407-lab4",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 1/3",d:"2026-11-19",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 3 (Financial Model), 4 (Lumped Approximations), 5 (Heat Flow) döngüsü; senin deneyin rotasyon tablosu paylaşılınca belli olacak. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
+  {id:"407-lab5",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 2/3",d:"2026-11-26",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 3/4/5 döngüsü, rotasyon henüz paylaşılmadı. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
+  {id:"407-lab6",c:"EE407",type:"lab",t:"EE407 Exp 3-4-5 · 3/3",d:"2026-12-03",s:"08:40",e:"12:30",lab:"EE407",n:"Grup 1 · Exp 3/4/5 döngüsü, rotasyon henüz paylaşılmadı. Oturum Perşembe 08:40–12:30; 11:40'taki EE361 dersiyle çakışıyor."},
   {id:"407-proj",c:"EE407",type:"lab",t:"EE407 Proje demosu",d:null,hint:"28–29 Ara (Pzt ya da Sal) · %10",win:["2026-12-28","2026-12-29"],w:2},
   {id:"407-fin",c:"EE407",type:"exam",t:"EE407 Final",d:null,hint:"Final haftası · %35",win:["2027-01-04","2027-01-16"]},
   // EE493
@@ -519,7 +519,7 @@ const INFO={
     links:[["Ders notları (GitHub)","https://github.com/mertankarali/Lecture-Notes/"],["Video dersler","https://www.youtube.com/watch?v=u0k4-7pnQp4&list=PLkzMUaHD5TOMXk5XkGtw6fBVQHemUKxx5"],["ODTUClass",ODTUCLASS]]},
   EE407:{people:[["Hoca","Afşar Saranlı · EZ-10","afsars@metu.edu.tr"],["Asistan","Atakan Durmaz","atakand@metu.edu.tr"],["Asistan","Anıl Gülbeden","gulbeden@metu.edu.tr"],["Lab mühendisi","Mesut Özer"]],
     book:"Ders kitabı yok · Chao, Process Control: A First Course with MATLAB",
-    rules:["Lablar Perşembe 08:40–11:30: Exp 1-6-7 → 15 Eki, 22 Eki, 5 Kas · Exp 3-4-5 → 19 Kas, 26 Kas, 3 Ara.","Her oturumda 3 grup 3 farklı deneyi yapar. Exp 1-6-7 rotasyonu: G1 7→1→6 · G2 6→7→1 · G3 1→6→7.","Midterm 14 Kasım Cumartesi (dersin takvimi; bölüm takviminde 9 Aralık yazıyordu).","Proje seçimi 2 Kasım, proje demoları 28–29 Aralık.","GenAI serbest ama kullandıysan belirtmelisin.","Resmi mazeretle 1 make-up sınav ve 1 lab telafisi."],
+    rules:["Lab: Perşembe 08:40–12:30 oturumu, Grup 1.","Exp 1-6-7 döngüsü: 15 Eki Exp 7 · 22 Eki Exp 1 · 5 Kas Exp 6.","Exp 3-4-5 döngüsü: 19 Kas · 26 Kas · 3 Ara (sıra henüz paylaşılmadı).","Lab 12:30'a kadar sürüyor; Perşembe 11:40 EE361 dersiyle çakışıyor.","Midterm 14 Kasım Cumartesi (dersin takvimi; bölüm takviminde 9 Aralık yazıyordu).","Proje seçimi 2 Kasım, proje demoları 28–29 Aralık.","GenAI serbest ama kullandıysan belirtmelisin.","Resmi mazeretle 1 make-up sınav ve 1 lab telafisi."],
     links:[["Control Guru","http://controlguru.org"],["ODTUClass",ODTUCLASS]]},
   EE493:{people:[["DS koordinatörleri","S. Figen Öktem Seven · Murat Eyüboğlu · Elif Tuğçe Ceran · Selçuk Yerci · Fatih Kamışlı · Murat Temiz · Yusuf Samet Yaraş"]],
     book:"",
@@ -538,7 +538,7 @@ const GRADES={
 const ATT_RULES=[
   {c:"EE303",slots:["ee303d"],label:"EE303 Discussion",maxMiss:2,rule:"Final şartı: 12'de en az 10"},
   {c:"EE361",labs:["361-lab1","361-lab2","361-lab3","361-lab45"],label:"EE361 Lablar",rule:"Hepsi zorunlu (yoksa NA)"},
-  {c:"EE407",labs:["407-lab1","407-lab2","407-lab3","407-lab4","407-lab5","407-lab6"],label:"EE407 Lablar",rule:"6 oturum · Perşembe 08:40"},
+  {c:"EE407",labs:["407-lab1","407-lab2","407-lab3","407-lab4","407-lab5","407-lab6"],label:"EE407 Lablar",rule:"Grup 1 · Perşembe 08:40–12:30"},
   {c:"EE407",slots:["ee407a","ee407b"],label:"EE407 Ders katılımı",rule:"Notun %5'i"},
   {c:"EE493",slots:["ee493s"],label:"EE493 Seminer katılımı",rule:"Notun %5'i"}
 ];

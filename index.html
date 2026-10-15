@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- surum: 2026-10-15 · ara sinav saatleri -->
+<!-- surum: 2026-10-15b · EE361 quiz 5 kaldirildi -->
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -460,7 +460,7 @@ const BASE=[
   {id:"303-fin",c:"EE303",type:"exam",t:"EE303 Final",d:null,hint:"Final haftası (4–16 Oca) · %40",win:["2027-01-04","2027-01-16"]},
   // EE361
   {id:"361-genai",c:"EE361",type:"deadline",t:"EE361 GenAI politikası onayı",d:"2026-10-16",w:0.5,n:"3. haftanın sonuna kadar ODTUClass'ta onayla, yoksa ödev/quiz notlanmaz"},
-  {id:"361-q1",c:"EE361",type:"quiz",t:"EE361 Quiz 1",d:"2026-10-23",s:"18:00",n:"Salonlar: EA202, EA206, EA207, EA208, EA209, EA211 (dağılım ODTUClass'ta) · 5 quiz toplam %15"},
+  {id:"361-q1",c:"EE361",type:"quiz",t:"EE361 Quiz 1",d:"2026-10-23",s:"18:00",n:"Salonlar: EA202, EA206, EA207, EA208, EA209, EA211 (dağılım ODTUClass'ta) · Safety Quiz + 4 quiz, toplam %15 (her biri %3)"},
   {id:"361-q2",c:"EE361",type:"quiz",t:"EE361 Quiz 2",d:"2026-11-10",s:"18:30",n:"Salonlar: EA202, EA206, EA207, EA208, EA209, EA211 (dağılım ODTUClass'ta)"},
   {id:"361-mt1",c:"EE361",type:"exam",t:"EE361 Midterm 1",d:"2026-11-23",s:"18:00",n:"Salonlar: EA202, EA206, EA207, EA208, EA209, EA211 (dağılım ODTUClass'ta) · %15"},
   {id:"361-q3",c:"EE361",type:"quiz",t:"EE361 Quiz 3",d:"2026-12-04",s:"18:30",n:"Salonlar: EA202, EA206, EA207, EA208, EA209, EA211 (dağılım ODTUClass'ta)"},
@@ -471,7 +471,6 @@ const BASE=[
   {id:"361-lab2",c:"EE361",type:"lab",t:"EE361 Lab 2",d:"2026-11-17",s:"13:40",e:"17:30",lab:"EE361",n:"Lab 2 · Hafta 8, Groups 1/2. Salı 13:40–17:30, bölüm \"- 1\". Katılım zorunlu (yoksa NA)."},
   {id:"361-lab3",c:"EE361",type:"lab",t:"EE361 Lab 3",d:"2026-12-01",s:"13:40",e:"17:30",lab:"EE361",n:"Lab 3 · Hafta 10, Groups 1/2. Salı 13:40–17:30, bölüm \"- 1\". Katılım zorunlu (yoksa NA). Aynı gün EE402 Midterm 2 var."},
   {id:"361-lab45",c:"EE361",type:"lab",t:"EE361 Lab 4 & 5",d:"2026-12-22",s:"13:40",e:"17:30",lab:"EE361",n:"Lab 4 & 5 · Hafta 13, Groups 1/2. Salı 13:40–17:30, bölüm \"- 1\". Katılım zorunlu (yoksa NA)."},
-  {id:"361-q5",c:"EE361",type:"quiz",t:"EE361 Quiz 5",d:null,hint:"14. hafta (28–31 Ara)",win:["2026-12-28","2026-12-31"]},
   {id:"361-fin",c:"EE361",type:"exam",t:"EE361 Final",d:null,hint:"Final haftası · %30 · katılım zorunlu",win:["2027-01-04","2027-01-16"]},
   // EE402
   {id:"402-mt1",c:"EE402",type:"exam",t:"EE402 Midterm 1",d:"2026-11-04",s:"18:00",n:"Salon: EA211 · %30 · kapalı kitap"},
@@ -528,7 +527,7 @@ const INFO={
 /* Not bileşenleri (syllabus ağırlıkları) */
 const GRADES={
   EE303:[{id:"att",l:"Discussion katılımı",w:6},{id:"q1",l:"Quiz 1",w:6},{id:"q2",l:"Quiz 2",w:6},{id:"q3",l:"Quiz 3",w:6},{id:"q4",l:"Quiz 4",w:6},{id:"mt",l:"Midterm",w:30},{id:"fin",l:"Final",w:40,final:1}],
-  EE361:[{id:"mt1",l:"Midterm 1",w:15},{id:"mt2",l:"Midterm 2",w:15},{id:"q1",l:"Quiz 1",w:3},{id:"q2",l:"Quiz 2",w:3},{id:"q3",l:"Quiz 3",w:3},{id:"q4",l:"Quiz 4",w:3},{id:"q5",l:"Quiz 5",w:3},{id:"l1",l:"Lab 1",w:5},{id:"l2",l:"Lab 2",w:5},{id:"l3",l:"Lab 3",w:5},{id:"l4",l:"Lab 4",w:5},{id:"l5",l:"Lab 5",w:5},{id:"fin",l:"Final",w:30,final:1}],
+  EE361:[{id:"mt1",l:"Midterm 1",w:15},{id:"mt2",l:"Midterm 2",w:15},{id:"safety",l:"Safety Quiz",w:3},{id:"q1",l:"Quiz 1",w:3},{id:"q2",l:"Quiz 2",w:3},{id:"q3",l:"Quiz 3",w:3},{id:"q4",l:"Quiz 4",w:3},{id:"l1",l:"Lab 1",w:5},{id:"l2",l:"Lab 2",w:5},{id:"l3",l:"Lab 3",w:5},{id:"l4",l:"Lab 4",w:5},{id:"l5",l:"Lab 5",w:5},{id:"fin",l:"Final",w:30,final:1}],
   EE402:[{id:"mt1",l:"Midterm 1",w:30},{id:"mt2",l:"Midterm 2",w:30},{id:"fin",l:"Final",w:40,final:1}],
   EE407:[{id:"att",l:"Katılım",w:5},{id:"mt",l:"Midterm",w:25},{id:"proj",l:"Dönem projesi",w:10},{id:"lab",l:"Lab & quizler",w:25},{id:"fin",l:"Final",w:35,final:1}],
   EE493:[{id:"wk",l:"Haftalık toplantı + takım + logbook",w:15},{id:"bs",l:"Business Statement",w:5},{id:"prop",l:"Proposal Report",w:10},{id:"test",l:"Test Doc & Module Demo",w:20},{id:"cdr",l:"Conceptual Design Report",w:20},{id:"pres",l:"Conceptual Design Sunumu",w:25},{id:"att",l:"Ders katılımı",w:5}]

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- surum: 2026-11-10 · paylasim gorunumu (?paylas) -->
+<!-- surum: 2026-11-10b · paylasimda kendi etkinliklerin -->
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -331,7 +331,7 @@ dialog::backdrop{background:rgba(20,20,19,.35)}
   .prog{margin-bottom:14px}
 }
 /* ---- PAYLAŞIM GÖRÜNÜMÜ (?paylas) ---- */
-.share #addBtn,.share #syncBtn,.share #views [data-v="courses"],.share #undCard,.share #attCard,.share .chipf[data-c="OZEL"],.share #ownFoot{display:none!important}
+.share #addBtn,.share #syncBtn,.share #views [data-v="courses"],.share #undCard,.share #attCard,.share #ownFoot{display:none!important}
 .sharenote{display:none;margin:6px 0 0;font-size:12.5px;color:var(--muted)}
 .share .sharenote{display:block}
 .share .sharenote b{color:var(--ink);font-weight:600}
@@ -704,7 +704,7 @@ function renderStrip(){
 function renderFilters(){
   const f=$("filters");
   f.innerHTML=Object.entries(COURSES).map(([k,v])=>
-    `<button class="chipf k k-${k}${isHidden(k)?" off":""}" data-c="${k}"><span class="dot"></span><b>${v.label||k}</b><span class="nm">${v.name}</span></button>`).join("")+
+    `<button class="chipf k k-${k}${isHidden(k)?" off":""}" data-c="${k}"><span class="dot"></span><b>${SHARE&&k==="OZEL"?"Diğer":(v.label||k)}</b><span class="nm">${SHARE&&k==="OZEL"?"Diğer etkinlikler":v.name}</span></button>`).join("")+
     `<button class="chipf tog${S.showClasses?"":" off"}" id="togCls"><span class="dot"></span><b>Ders saatleri</b></button>`;
   f.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{const c=b.dataset.c;S.hidden=isHidden(c)?S.hidden.filter(x=>x!==c):[...S.hidden,c];persist();renderAll()});
   $("togCls").onclick=()=>{S.showClasses=!S.showClasses;persist();renderAll()};
@@ -1119,6 +1119,7 @@ function openEvent(id){
       ${e.n?`<div class="note">${esc(e.n)}</div>`:""}
       ${cf?`<div class="warn">⚠ ${esc(cf)}</div>`:""}
       ${e.hint?`<p style="color:var(--muted);font-size:12.5px">Syllabus: ${esc(e.hint)}</p>`:""}
+      ${e.src==="custom"&&!SHARE?`<p style="color:var(--muted);font-size:12.5px">Paylaşım linkinde: ${{mesgul:"“Meşgul” olarak görünür",acik:"başlığıyla görünür",gizli:"görünmez"}[e.vis||"mesgul"]}</p>`:""}
       ${e.user&&origDated?`<p style="color:var(--muted);font-size:12.5px">Tarihini sen değiştirdin.</p>`:""}
       ${editable?`<h6>Adımlar</h6><div id="subBox">${subsHTML(id)}</div>`:""}</div>
      <div class="mf">
@@ -1151,7 +1152,9 @@ function openPlace(id){
       ${e.lab&&LAB_SLOT[e.lab]?`<div class="note">Lab saatin programına göre <b>${LAB_SLOT[e.lab].lbl}</b>. Saat otomatik dolduruldu, gerekirse değiştir.</div>`:""}
       <div class="form">
         ${isCustom?`<label class="full">Başlık<input id="fT" value="${esc(e.t)}" placeholder="ör. EE402 ödev teslimi"></label>
-          <label>Ders<select id="fC">${courseOpts(e.c)}</select></label><label>Tür<select id="fY">${typeOpts(e.type)}</select></label>`:""}
+          <label>Ders<select id="fC">${courseOpts(e.c)}</select></label><label>Tür<select id="fY">${typeOpts(e.type)}</select></label>
+          <label class="full">Paylaşım görünümünde<select id="fV">${[["mesgul","“Meşgul” olarak göster (başlık gizli)"],["acik","Başlığıyla göster"],["gizli","Gösterme"]].map(([v,l])=>`<option value="${v}"${(e.vis||"mesgul")===v?" selected":""}>${l}</option>`).join("")}</select></label>
+          ${SC?"":`<p class="full" style="grid-column:1/-1;margin:0;font-size:12px;color:var(--muted)">Paylaşım linkine yansıması için bu cihazda senkronun açık olmalı.</p>`}`:""}
         <label class="full">Tarih<input type="date" id="fD" value="${dval}" ${e.win?`min="${e.win[0]}" max="${e.win[1]}"`:""}></label>
         <label>Başlangıç (ops.)<input type="time" id="fS" value="${defS}"></label>
         <label>Bitiş (ops.)<input type="time" id="fE" value="${defE}"></label>
@@ -1175,11 +1178,11 @@ function openPlace(id){
         const before=snapshot();
         if(isNew){
           const t=q("#fT").value.trim(); if(!t){q("#fT").focus();return}
-          S.custom.push({id:"u"+Date.now().toString(36),c:q("#fC").value,type:q("#fY").value,t,d:dv,s:dv?sv:null,e:dv?ev:null,n:nv||undefined});
+          S.custom.push({id:"u"+Date.now().toString(36),c:q("#fC").value,type:q("#fY").value,t,d:dv,s:dv?sv:null,e:dv?ev:null,n:nv||undefined,vis:q("#fV").value});
         }else{
           const patch={d:dv,end:null,s:dv?sv:null,e:dv?ev:null};
           if(nv||e.n)patch.n=nv||(isCustom?undefined:b0&&b0.n);
-          if(isCustom){patch.t=q("#fT").value.trim()||e.t;patch.c=q("#fC").value;patch.type=q("#fY").value}
+          if(isCustom){patch.t=q("#fT").value.trim()||e.t;patch.c=q("#fC").value;patch.type=q("#fY").value;patch.vis=q("#fV").value}
           setPlace(e,patch);
         }
         const cf=dv?conflictText(conflictsFor(dv,sv,ev,isNew?null:e.id)):"";
@@ -1302,7 +1305,36 @@ function merge3(B,L,R){const o={};SYNC_FIELDS.forEach(f=>{
   else if(f==="custom")o[f]=Object.values(objMerge(byId(B[f]),byId(L[f]),byId(R[f])));
   else o[f]=objMerge(B[f]||{},L[f]||{},R[f]||{});});return o}
 function applyMerged(m){SYNC_FIELDS.forEach(k=>S[k]=m[k]);S._ts=Date.now();persist();renderAll()}
-function setSync(st,msg){SY.status=st;SY.msg=msg||"";if(st==="ok")SY.last=new Date();renderSyncBadge()}
+function setSync(st,msg){SY.status=st;SY.msg=msg||"";if(st==="ok"){SY.last=new Date();schedulePublish()}renderSyncBadge()}
+/* Paylaşım listesi: data dalında düz JSON. Sadece tarih/saat/başlık; not, yoklama, sınav notu yok. */
+const PUB_PATH="paylasim.json";
+let pubTimer=null,lastPub=null;
+function shareSnapshot(){
+  const place={};Object.entries(S.place).forEach(([k,v])=>{if(BASE.some(b=>b.id===k))place[k]={d:v.d??null,s:v.s??null,e:v.e??null,end:v.end??null}});
+  const custom=S.custom.filter(c=>c.d&&(c.vis||"mesgul")!=="gizli").map(c=>{const open=c.vis==="acik";
+    return {id:c.id,c:open?c.c:"OZEL",type:open?c.type:"event",t:open?c.t:"Meşgul",d:c.d,s:c.s||null,e:c.e||null}});
+  return {v:1,place,cancel:[...S.cancel].sort(),custom};
+}
+function schedulePublish(){if(!SC||SHARE)return;clearTimeout(pubTimer);pubTimer=setTimeout(publishShare,1500)}
+async function publishShare(){
+  if(!SC||SHARE)return;
+  const body=JSON.stringify(shareSnapshot()); if(body===lastPub)return;
+  try{
+    const cur=await gh(SC,`/contents/${PUB_PATH}?ref=${SC.branch}`); let sha=null;
+    if(cur.ok){sha=cur.j.sha;const old=decodeURIComponent(escape(atob(cur.j.content.replace(/\n/g,""))));if(old===body){lastPub=body;return}}
+    const r=await gh(SC,`/contents/${PUB_PATH}`,{method:"PUT",body:{message:"paylasim listesi",content:btoa(unescape(encodeURIComponent(body))),branch:SC.branch,...(sha?{sha}:{})}});
+    if(r.ok)lastPub=body;
+  }catch(_){}
+}
+async function loadShared(){
+  const gio=location.hostname.endsWith(".github.io");
+  const owner=gio?location.hostname.split(".")[0]:"oguzkaandogru", repo=gio?(location.pathname.split("/")[1]||"my_calendar"):"my_calendar";
+  let txt=null;
+  try{const r=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${PUB_PATH}?ref=data`,{cache:"no-store",headers:{Accept:"application/vnd.github.raw+json"}});if(r.ok)txt=await r.text()}catch(_){}
+  if(!txt){try{const r=await fetch(`https://raw.githubusercontent.com/${owner}/${repo}/data/${PUB_PATH}`,{cache:"no-store"});if(r.ok)txt=await r.text()}catch(_){}}
+  if(!txt)return;
+  try{const p=JSON.parse(txt);S.place=p.place||{};S.cancel=p.cancel||[];S.custom=Array.isArray(p.custom)?p.custom:[];renderAll()}catch(_){}
+}
 function renderSyncBadge(){
   const b=$("syncBtn"),n=$("saveNote"); if(!b)return;
   const t=SY.last?`${String(SY.last.getHours()).padStart(2,"0")}:${String(SY.last.getMinutes()).padStart(2,"0")}`:"";
@@ -1422,7 +1454,7 @@ document.addEventListener("keydown",e=>{
   if(e.key==="t"||e.key==="T"){anchor=new Date(today);renderMain()}
 });
 setInterval(()=>{if(!dlg.open){renderStrip();if(S.view==="week"||S.view==="day")renderMain()}},60000);
-setView(narrow()&&S.view==="week"?"day":(S.view||"week")); renderAll(); renderSyncBadge(); if(SC)syncPull(true);
+setView(narrow()&&S.view==="week"?"day":(S.view||"week")); renderAll(); renderSyncBadge(); if(SC)syncPull(true); if(SHARE)loadShared();
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>

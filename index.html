@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- surum: 2026-10-15b · EE361 quiz 5 kaldirildi -->
+<!-- surum: 2026-11-10 · paylasim gorunumu (?paylas) -->
 <html lang="tr">
 <head>
 <meta charset="utf-8">
@@ -330,6 +330,11 @@ dialog::backdrop{background:rgba(20,20,19,.35)}
   .legend{display:none}
   .prog{margin-bottom:14px}
 }
+/* ---- PAYLAŞIM GÖRÜNÜMÜ (?paylas) ---- */
+.share #addBtn,.share #syncBtn,.share #views [data-v="courses"],.share #undCard,.share #attCard,.share .chipf[data-c="OZEL"],.share #ownFoot{display:none!important}
+.sharenote{display:none;margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+.share .sharenote{display:block}
+.share .sharenote b{color:var(--ink);font-weight:600}
 /* ---- YAZDIRMA ---- */
 @page{size:A4 landscape;margin:9mm}
 @media print{
@@ -353,6 +358,7 @@ dialog::backdrop{background:rgba(20,20,19,.35)}
     <div>
       <h1>2026 Güz Dönemi Takvimi</h1>
       <div class="sub">Ders programı, sınavlar ve teslimler · EE303 · EE361 · EE402 · EE407 · EE493</div>
+      <div class="sharenote"><b>Salt okunur paylaşım görünümü.</b> Ders saatleri, lablar, sınavlar ve teslimler görünür; kişisel notlar, sınav notları ve devam bilgisi bu görünümde yer almaz.</div>
     </div>
     <div class="toolbar">
       <div class="seg" id="views">
@@ -371,12 +377,12 @@ dialog::backdrop{background:rgba(20,20,19,.35)}
   <div class="layout">
     <main class="card" id="main"></main>
     <aside class="side">
-      <section class="card">
+      <section class="card" id="undCard">
         <h3>Tarihi belli değil <span class="cnt" id="undCnt">0</span></h3>
         <div class="tip">Bir öğeyi takvimde bir güne sürükle ya da tıklayıp tarih ver. Takvimdeki bir etkinliği buraya sürükleyerek geri alabilirsin.</div>
         <div class="und" id="undated"></div>
       </section>
-      <section class="card">
+      <section class="card" id="attCard">
         <h3>Devam durumu</h3>
         <div class="att" id="attendance"></div>
       </section>
@@ -387,8 +393,8 @@ dialog::backdrop{background:rgba(20,20,19,.35)}
     </aside>
   </div>
   <footer>
-    <span id="saveNote">Değişikliklerin bu tarayıcıda otomatik kaydedilir.</span>
-    <a id="bkOut">Yedek indir</a><a id="bkIn">Yedek yükle</a><a id="reset">Değişiklikleri sıfırla</a>
+    <span id="ownFoot"><span id="saveNote">Değişikliklerin bu tarayıcıda otomatik kaydedilir.</span>
+    <a id="bkOut">Yedek indir</a> <a id="bkIn">Yedek yükle</a> <a id="reset">Değişiklikleri sıfırla</a></span>
     <span>Kısayollar: ← → gezin · T bugün</span>
     <input type="file" id="bkFile" accept=".json,application/json" hidden>
   </footer>
@@ -574,9 +580,11 @@ const endMin=e=>e.e?toMin(e.e):toMin(e.s)+(e.type==="exam"?120:60);
    ===================================================================== */
 const SKEY="guz2026.takvim.v2";
 const blank=()=>({place:{},custom:[],cancel:[],hidden:[],view:"week",showClasses:true,att:{},done:[],sub:{},cnote:{},grades:{},target:{}});
-let S=(()=>{try{const v=JSON.parse(localStorage.getItem(SKEY));return v?Object.assign(blank(),v):blank()}catch(_){return blank()}})();
+const SHARE=new URLSearchParams(location.search).has("paylas");
+if(SHARE)document.documentElement.classList.add("share");
+let S=SHARE?blank():(()=>{try{const v=JSON.parse(localStorage.getItem(SKEY));return v?Object.assign(blank(),v):blank()}catch(_){return blank()}})();
 let undoStack=null;
-function persist(){try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(_){}}
+function persist(){if(SHARE)return;try{localStorage.setItem(SKEY,JSON.stringify(S))}catch(_){}}
 function save(){S._ts=Date.now();persist();schedulePush()}
 const snapshot=()=>JSON.stringify(S);
 function commit(msg,before,warn){save();renderAll();if(msg)toast(msg,before,warn)}
@@ -708,7 +716,7 @@ function renderFilters(){
 function chip(e,dt){
   const cont=e.end&&dt&&+dt!==+e.sd;
   const cls=["ev","k","k-"+e.c,e.type,cont?"cont":"",e.user?"user":"",e.done?"done":""].join(" ");
-  const drag=canDone(e)?`draggable="true" data-drag="${e.id}"`:"";
+  const drag=canDone(e)&&!SHARE?`draggable="true" data-drag="${e.id}"`:"";
   return `<span class="${cls}" data-ev="${e.id}" ${drag} title="${esc(e.t)}">${cont?"↳ ":""}${e.s?e.s+" ":""}${esc(e.t)}</span>`;
 }
 function bindChips(root){
@@ -717,7 +725,7 @@ function bindChips(root){
   root.querySelectorAll("[data-done]").forEach(el=>el.addEventListener("click",ev=>{ev.stopPropagation();toggleDone(el.dataset.done)}));
   bindDrag(root);
 }
-const attMark=c=>c.att===true?`<span class="mk ok" title="Katıldın">✓</span>`:c.att===false?`<span class="mk no" title="Katılmadın">✗</span>`:(c.cnote||c.note)?`<span class="mk inf" title="Not var">✎</span>`:"";
+const attMark=c=>SHARE?"":c.att===true?`<span class="mk ok" title="Katıldın">✓</span>`:c.att===false?`<span class="mk no" title="Katılmadın">✗</span>`:(c.cnote||c.note)?`<span class="mk inf" title="Not var">✎</span>`:"";
 
 /* =====================================================================
    HAFTA
@@ -762,7 +770,7 @@ function renderWeek(){
           ${attMark(c)}<b>${esc(label)}</b><div class="tm">${c.s}–${c.e}${sl.room?" · "+sl.room:""}</div>${ht>58&&c.topic?`<div class="rm">${esc(c.topic)}</div>`:""}</div>`;
       }else{
         const e=it.o;
-        h+=`<div class="blk evt k k-${e.c} ${e.type}${e.done?" done":""}" style="${pos}" data-ev="${e.id}" draggable="true" data-drag="${e.id}" title="${esc(e.t)} · saati değiştirmek için sürükle">
+        h+=`<div class="blk evt k k-${e.c} ${e.type}${e.done?" done":""}" style="${pos}" data-ev="${e.id}" ${SHARE?"":`draggable="true" data-drag="${e.id}"`} title="${esc(e.t)} · saati değiştirmek için sürükle">
           <b>${esc(e.t)}</b><div class="tm">${e.s}${e.e?"–"+e.e:""}</div></div>`;
       }
     });
@@ -866,7 +874,7 @@ function itemHTML(e,withRel){
     <div><div class="t"><span class="dot"></span>${esc(e.t)}${withRel?"":badge}</div>
     <div class="s">${TYPE_TR[e.type]} · ${when}${sp}${e.n?" · "+esc(e.n):""}</div></div>
     ${withRel?`<div class="r">${relTxt(e)}</div>`:""}
-    ${canDone(e)?`<button class="chk${e.done?" on":""}" data-done="${e.id}" title="${e.done?"Tamamlanmadı yap":"Tamamlandı işaretle"}">✓</button>`:"<span></span>"}</div>`;
+    ${canDone(e)&&!SHARE?`<button class="chk${e.done?" on":""}" data-done="${e.id}" title="${e.done?"Tamamlanmadı yap":"Tamamlandı işaretle"}">✓</button>`:"<span></span>"}</div>`;
 }
 function renderList(){
   const m=$("main"), evs=dated().sort((a,b)=>a.sd-b.sd||ORDER[a.type]-ORDER[b.type]);
@@ -1061,6 +1069,9 @@ function openClass(cid){
   const sl=oc.slot, label=sl.k==="Ders"?`${sl.c} ${COURSES[sl.c].name}`:`${sl.c} ${sl.k}`;
   const canc=oc.cancelled, tracked=ATT_RULES.some(r=>(r.slots||[]).includes(sid));
   let dirty=false;
+  if(SHARE){openModal(head(sl.c,label,`${DOWL[dowIdx(dt)]}, ${dt.getDate()} ${MONTHS[dt.getMonth()]} · ${oc.s}–${oc.e}${sl.room?" · "+sl.room:""}`)+
+    `<div class="mb">${oc.week?`<p><b>${oc.week}. hafta</b>${oc.topic?" · "+esc(oc.topic):""}</p>`:""}${oc.note?`<div class="note">${esc(oc.note)}</div>`:""}</div>
+     <div class="mf"><span class="sp"></span><button class="btn pri" id="mClose">Kapat</button></div>`,d=>{d.querySelector("#mClose").onclick=()=>dlg.close()});return}
   openModal(head(sl.c,label,`${DOWL[dowIdx(dt)]}, ${dt.getDate()} ${MONTHS[dt.getMonth()]} · ${oc.s}–${oc.e}${sl.room?" · "+sl.room:""}`)+
     `<div class="mb">${oc.week?`<p><b>${oc.week}. hafta</b>${oc.topic?" · "+esc(oc.topic):""}</p>`:""}
      ${oc.note?`<div class="note">${esc(oc.note)}</div>`:""}
@@ -1101,8 +1112,8 @@ function openEvent(id){
   const e=findEv(id); if(!e)return;
   if(!e.d){openPlace(id);return}
   const when=e.end?`${fmtD(e.sd)} – ${fmtD(e.ed)}`:`${DOWL[dowIdx(e.sd)]}, ${e.sd.getDate()} ${MONTHS[e.sd.getMonth()]} ${e.sd.getFullYear()}`+(e.s?` · ${e.s}${e.e?"–"+e.e:""}`:"")+(e.due?` · ${e.due}`:"");
-  const days=diffDays(e.sd,today), editable=canDone(e), b0=BASE.find(b=>b.id===id), origDated=!!(b0&&b0.d);
-  const cf=e.s?conflictText(conflictsFor(e.d,e.s,e.e,id)):"";
+  const days=diffDays(e.sd,today), editable=canDone(e)&&!SHARE, b0=BASE.find(b=>b.id===id), origDated=!!(b0&&b0.d);
+  const cf=e.s&&!SHARE?conflictText(conflictsFor(e.d,e.s,e.e,id)):"";
   openModal(head(e.c,e.t,`${TYPE_TR[e.type]} · ${when}`)+
     `<div class="mb">${e.done?`<p style="color:var(--ok);font-weight:650">✓ Tamamlandı</p>`:days>0?`<p>${days} gün kaldı</p>`:days===0?"<p><b>Bugün</b></p>":""}
       ${e.n?`<div class="note">${esc(e.n)}</div>`:""}
@@ -1242,7 +1253,7 @@ $("syncBtn").onclick=openSync;
    ===================================================================== */
 const SYNC_FIELDS=["place","custom","cancel","att","done","sub","cnote","grades","target"];
 const CKEY="guz2026.sync";
-let SC=(()=>{try{return JSON.parse(localStorage.getItem(CKEY))||null}catch(_){return null}})();
+let SC=SHARE?null:(()=>{try{return JSON.parse(localStorage.getItem(CKEY))||null}catch(_){return null}})();
 const SY={status:SC?"idle":"off",msg:"",last:null,timer:null,busy:false,pending:false,sha:null,lastPull:0};
 const b64e=u8=>{let s="";for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000));return btoa(s)};
 const b64d=str=>Uint8Array.from(atob(str),c=>c.charCodeAt(0));
@@ -1399,7 +1410,7 @@ function openSync(){
 function setView(v){S.view=v;persist();document.querySelectorAll("#views button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));renderMain()}
 function renderMain(){({day:renderDay,month:renderMonth,list:renderList,courses:renderCourses}[S.view]||renderWeek)()}
 function renderSideOnly(){renderUpcoming();renderAttendance()}
-function renderAll(){renderStrip();renderFilters();renderMain();renderUpcoming();renderUndated();renderAttendance()}
+function renderAll(){renderStrip();renderFilters();renderMain();renderUpcoming();if(!SHARE){renderUndated();renderAttendance()}}
 document.querySelectorAll("#views button").forEach(b=>b.onclick=()=>setView(b.dataset.v));
 document.addEventListener("keydown",e=>{
   if(dlg.open||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
